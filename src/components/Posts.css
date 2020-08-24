@@ -1,0 +1,13 @@
+.Posts textarea {
+  width: 40%;
+  height: 80%;
+}
+
+.UserPhoto {
+  width: 10%;
+  height: 10%;
+  border-radius: 60%;
+}
+.ContentPhoto {
+width: 35%;
+}

@@ -1,0 +1,9 @@
+.DialogPage {
+    grid-area: c;
+    height: 50px;
+    font-size: 30px;
+    text-decoration: none;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}

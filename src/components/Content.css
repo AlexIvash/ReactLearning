@@ -1,0 +1,19 @@
+.content {
+grid-area:c;
+background-color: cornflowerblue;
+margin: 0 auto;
+}
+
+.PostButton1 {
+    size: inherit;
+    color: navy;
+    border-radius:30px;
+    background-color: -moz-mac-accentdarkshadow;
+    webkit-appearance:none
+}
+.PostButton2 {
+    color: crimson;
+    border-radius:30px;
+    background-color: -moz-mac-accentdarkshadow;
+    webkit-appearance:none
+}

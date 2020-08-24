@@ -1,0 +1,14 @@
+.sidebar {
+  grid-area: n;
+   background-color: #2089b3;
+    height: 30%;
+}
+
+.Dialogs {
+    grid-area: c;
+     width: 1em;
+     height: 1em;
+    font-size: 4em;
+    text-decoration: none;
+    display: grid;
+}
