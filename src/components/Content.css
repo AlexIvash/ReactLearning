@@ -1,9 +1,14 @@
 .content {
-grid-area:c;
-background-color: cornflowerblue;
-margin: 0 auto;
+grid-area: c;
+/*background-color: cornflowerblue;*/
+margin: 0px;
+padding: 0px;
+    height: 10px;
+    /*
+    height should always be a small number - because in other case
+    it expands so much that we can't work with it.
+    */
 }
-
 .PostButton1 {
     size: inherit;
     color: navy;
@@ -16,4 +21,9 @@ margin: 0 auto;
     border-radius:30px;
     background-color: -moz-mac-accentdarkshadow;
     webkit-appearance:none
+}
+img{
+    width: 10%;
+    height: 10%;
+    border-radius: 60%;
 }

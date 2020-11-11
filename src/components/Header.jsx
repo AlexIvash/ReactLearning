@@ -4,7 +4,8 @@ import './Header.css';
 const Header = () => {
 return (
 <header className ='header'>
-<img src = "https://novostroyki.realt.ua/store/company/58e0d1f5b036601e618fca11/logo/6919a784ca84fe010e06e323bdbc694f.jpg" className = "headerImg"></img>
+<p className = "headerLogo">Message Exchanger V1.0</p>
+
 </header>
 );
 }

@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:ReactLearning" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="" />
+    <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Content.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Content.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/render.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +31,9 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZxF6ioNuPQ8bzpN12NKA0sLyZI" />
   <component name="ProjectViewState">
@@ -18,9 +43,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -39,25 +67,32 @@
       <option name="presentableId" value="Default" />
       <updated>1585772664654</updated>
       <workItem from="1598270548641" duration="1514000" />
+      <workItem from="1602966922431" duration="368000" />
+      <workItem from="1605130618158" duration="9285000" />
+      <workItem from="1605181257519" duration="8547000" />
+      <workItem from="1605199412649" duration="1243000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="559" y="349" key="com.intellij.ide.util.TipDialog" timestamp="1586074982989">
-      <screen x="0" y="23" width="1680" height="947" />
+    <state x="563" y="225" width="670" height="676" key="search.everywhere.popup" timestamp="1605141122166">
+      <screen x="0" y="23" width="1680" height="927" />
     </state>
-    <state x="559" y="349" key="com.intellij.ide.util.TipDialog/0.23.1680.947@0.23.1680.947" timestamp="1586074982989" />
-    <state x="522" y="242" key="new project wizard" timestamp="1586758000174">
-      <screen x="0" y="23" width="1680" height="948" />
-    </state>
-    <state x="522" y="242" key="new project wizard/0.23.1680.947@0.23.1680.947" timestamp="1585940802780" />
-    <state x="522" y="242" key="new project wizard/0.23.1680.948@0.23.1680.948" timestamp="1586758000174" />
-    <state x="971" y="294" width="670" height="676" key="search.everywhere.popup" timestamp="1585977759565">
-      <screen x="0" y="23" width="1680" height="947" />
-    </state>
-    <state x="971" y="294" width="670" height="676" key="search.everywhere.popup/0.23.1680.947@0.23.1680.947" timestamp="1585977759565" />
+    <state x="563" y="225" width="670" height="676" key="search.everywhere.popup/0.23.1680.927@0.23.1680.927" timestamp="1605141122166" />
   </component>
 </project>

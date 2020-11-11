@@ -1,35 +1,24 @@
-
-
-
  a.active {
-    background-color: darkseagreen;
     color: midnightblue;
     text-decoration: none;
 }
-
 .DialogPage {
     grid-area: c;
-    height: 30%;
+    height: 100%;
     font-size: 1em;
     text-decoration: none;
     display: grid;
     grid-template-rows: 50% 50%;
     grid-template-columns: 50% 50%;
 }
-
 .active {
     color: gold;
 }
-
-
-
 .UserAvatar {
     width: 40%;
     height: 40%;
     border-radius: 50%;
 }
-
-
 .UserNames {
     display: grid;
     /*grid-template-rows: 60px 1fr;*/
@@ -38,6 +27,7 @@ grid-gap: 1%;
 }
 .Messages {
 display: grid;
+    margin-top:10%;
 /*grid-template-rows: 60px 1fr;*/
 /*grid-template-columns: 2fr 10fr;*/
 grid-gap: 1%;

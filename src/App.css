@@ -1,31 +1,18 @@
 .app-wrapper {
 margin: 0 auto;
   display: grid;
-  background-color: #646b6b;
   display: grid;
-  width: 100%;
-  height: 100%;
-
- grid-template-areas:
+  grid-template-areas:
 "h h"
 "n c";
  grid-template-rows: 40% 60%;
   grid-template-columns: 40% 60%;
   grid-gap: 1%;
   }
-
-
-
-
-
-
-
 .profileImg {
 width: 30%;
 height: 30%;
 }
-
-
 .AvaDescription img {
 width: 10%;
 height: 10%;

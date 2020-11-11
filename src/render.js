@@ -6,8 +6,9 @@ import index from './index';
 
 export let renderEntireTree = (state) => {
 ReactDOM.render(
-<App state={state} addPost={addPost} />, document.getElementById('root'));
 
+/*<App state={state} addPost={state.addPost.bind(state)} />, document.getElementById('root'));*/
+    <App state={state} addPost={addPost} />, document.getElementById('root'));
 {/*
 <BrowserRouter>
  */}

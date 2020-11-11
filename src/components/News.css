@@ -11,9 +11,7 @@
        color: darkslategrey;
    }
    */
-
   a.active {
-       background-color: darkseagreen;
        color: midnightblue;
        text-decoration: none;
    }

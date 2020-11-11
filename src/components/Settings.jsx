@@ -6,7 +6,7 @@ const Settings = () => {
 return (
 <div className = "Settings">
 <NavLink to ="/Settings">
-Settings
+Settings (Being Developped)
 </NavLink>
 </div>
 

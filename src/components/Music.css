@@ -7,7 +7,6 @@ font-size: 4em;
   display: grid;
 }
 a.active {
-  background-color: darkseagreen;
   color: midnightblue;
   text-decoration: none;
 }

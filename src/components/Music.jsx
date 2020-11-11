@@ -6,7 +6,7 @@ const Music = () => {
 return (
 <div className = "Music">
 <NavLink to ="/Music">
-Music
+Music (Being Developped)
 </NavLink>
 </div>
 
