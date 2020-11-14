@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './Dialogs.module.css';
 import {BrowserRouter, NavLink, Route} from "react-router-dom";
+import store from "./../Redux/State";
 
 const Dialogs = (props) => {
 
 
-    let userData = props.messagesData
+    let userData = store.getState().messagesData
         .map( dialog => <Dialogs1 name = {dialog.name} img = {dialog.img} /> );
 
-    let dialogElements = props.messagesData
+    let dialogElements = store.getState().messagesData
         .map( dialog => <Messages message = {dialog.message} /> );
     return (
         <div className={styles.DialogPage}>

@@ -7,11 +7,8 @@ import Content from './../components/Content';
  с Back-End часть вроде node js express app.
  */
 
-let state = {
-_state: {},
-    getState(){
-    return this._state;
-    },
+let store = {
+_state: {
     postsData: [
         {
             imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
@@ -42,7 +39,6 @@ _state: {},
             UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
         }
     ],
-
     messagesData: [
         {
             name: "Friend of mine",
@@ -55,47 +51,88 @@ _state: {},
             img: "https://www.webberinsurance.com.au/wp-content/uploads/2018/07/Real-Estate-Insurance-Australia.jpg"
         }
     ]
+},
+    /**
+     *
+     * Если бы в getState стояло "return _state" - то мы возвращали бы переменную которой не существовало, а не свойство.
+     * потому слово "this" указывает на конкретную переменную которую нужно вернуть.
+     * К слову мы могли бы переименовать this._state в store._state, но если бы имя store поменялось - этот метод не был бы
+     * актуальным и потому это неправильно
+     * */
+    getState(){
+    return this._state;
+    },
+    renderEntireTree(){
+    console.log("I am renderEntireTree");
+},
+    /**
+     * textFromNewPost - это сообщение которое берется из поля ввода на странице content.jsx
+     * и мы передаем его сюда из той страницы
+     */
+    addPost(textFromNewPost){
+    console.log("I am addPost");
+
+        /*message: this._state.postsData,
+     нам нужно каким-то путем добавлять message именно вот сюда: message: this._state.postsData.message,
+     message: this._state.postsData.push(textFromNewPost),
+     message: textFromNewPost,
+     */
+
+    let newPost = {
+        imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
+        message: "textFromNewPost",
+        likesCount: '0',
+        Comments: '1',
+        UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
+    };
+        this._state.postsData.push(newPost);
+        console.log(textFromNewPost);
+        //на 17:30  выясняет примчину почему addPost не работает
 }
 
-{/**export let addPost = (postMessage) => {
-возможно сюда должен прилетать через props данные метода addPost? из content.jsx
- Они по идее прилетают через props
-*/}
-
-export let addPost = (props) => {
-    {/**
+}
 
 
-     https://www.youtube.com/watch?v=Bq_tmt-hRn0&list=PLcvhF2Wqh7DNVy1OCUpG3i5lyxyBWhGZ8&index=38
-     нужно связать эту кнопку с методом добавления данных
-     данные будут добавляться в state.js
-     message: this.Content.postMessage,
-     message: this._state.Content.Post.postMessage,
-     message: this._state.postMessage,
-     message: this.postMessage,
-     message: props.addPost(),
-
-     This was almost correct but not(at least didn't trigger an error:
-     message: postMessage,
-     */}
-let newPost = {
-imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
-id: 5,
-message: props.addPost(),
-likesCount: 0
-};
-    {/*
+    /*
     state.postsData.push(newPost);
     Content.postsData.push(newPost);
-    */}
+    */
     /**
      * Здесь сообщение которое мы получили - мы отправляем в наш список postsData. А postsData вероятно
      * передаем в render.js(где они и отрисовываются)
      */
-    this._state.postsData.push(newPost);
-renderEntireTree(state);
-}
 
 
 
-export default state;
+
+
+export default store;
+
+/**
+ Каким-то образом эта команда делает объект глобальным и его можно вызывать где угодно
+ не импортируя никаких переменных или классов.
+ store у нас в данный момент будет использовать ООП
+ */
+window.store = store;
+
+
+
+
+/**export let addPost = (postMessage) => {
+возможно сюда должен прилетать через props данные метода addPost? из content.jsx
+ Они по идее прилетают через props
+ */
+
+/**
+ https://www.youtube.com/watch?v=Bq_tmt-hRn0&list=PLcvhF2Wqh7DNVy1OCUpG3i5lyxyBWhGZ8&index=38
+ нужно связать эту кнопку с методом добавления данных
+ данные будут добавляться в state.js
+ message: this.Content.postMessage,
+ message: this._state.Content.Post.postMessage,
+ message: this._state.postMessage,
+ message: this.postMessage,
+ message: props.addPost(),
+
+ This was almost correct but not(at least didn't trigger an error:
+ message: postMessage,
+ */
