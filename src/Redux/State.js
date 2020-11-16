@@ -25,13 +25,6 @@ _state: {
             UserPhoto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS2ci7r_2qY5iozmqr0yCBNE2OwO4z9LnlTIg&usqp=CAU'
         },
         {
-            imgUrl: 'https://img.lun.ua/panorama/1461-1.jpg',
-            message: "Such big living complex! Do you like it?",
-            likesCount: '0',
-            Comments: '1',
-            UserPhoto: 'https://images.squarespace-cdn.com/content/v1/5b311c548f5130ce864668ad/1530117194751-BO19EZ1SDCFD5KSJRIA3/ke17ZwdGBToddI8pDm48kDFo1slIxJPvM5Urjvd1DloUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJQr8gHdfuVEBZ6fGgEWibFLt9utBi6NVeqXAKikhaWpvHMFZDt2iry-WhuVPCUgQY/dream-realty-real-estate-agent-realtor-broker-owner-katie-o%27keefe-milwaukee-wisconsin'
-        },
-        {
             imgUrl: 'https://i.obozrevatel.com/nerukhomi/stroitelstvo/2020/1/28/12186.webp?size=768x432',
             message: "Winter outside. School is almost done!",
             likesCount: '14',
@@ -67,45 +60,63 @@ _state: {
 },
     /**
      * textFromNewPost - это сообщение которое берется из поля ввода на странице content.jsx
-     * и мы передаем его сюда из той страницы
+     * и мы передаем его сюда из страницы Content (под роутом profile)
      */
-    addPost(textFromNewPost){
+     addPost(textFromNewPost){
     console.log("I am addPost");
-
-        /*message: this._state.postsData,
-     нам нужно каким-то путем добавлять message именно вот сюда: message: this._state.postsData.message,
-     message: this._state.postsData.push(textFromNewPost),
-     message: textFromNewPost,
-     */
-
-    let newPost = {
-        imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
-        message: "textFromNewPost",
-        likesCount: '0',
-        Comments: '1',
-        UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
-    };
-        this._state.postsData.push(newPost);
-        console.log(textFromNewPost);
-        //на 17:30  выясняет примчину почему addPost не работает
+        if(textFromNewPost===undefined||textFromNewPost===null||!textFromNewPost.length||!textFromNewPost){
+            /**
+             * Вместо пустого message будет добавляться техническое сообщение
+             */
+            const textFromNewPost  = "Due to technical issue we can't read your data from text-area now. Please try it after fixing code";
+            let newPost = {
+                imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
+                message: textFromNewPost,
+                likesCount: '0',
+                Comments: '1',
+                UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
+            };
+            this._state.postsData.push(newPost);
+            console.log(textFromNewPost);
+        } else {
+            /**
+             * Так как сейчас здесь массив вместо базы данных то для того чтобы проверить что сообщение было добавлено
+             * необходимо перейти на другую вкладку приложения и вернуть назад. Но нельзя перезагружать страницу
+             * потому что массив при перезагрузке страницы обнуляется.
+             */
+            let newPost = {
+                imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
+                message: textFromNewPost,
+                likesCount: '0',
+                Comments: '1',
+                UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
+            };
+            this._state.postsData.push(newPost);
+            console.log(textFromNewPost);
+        }
+        /**
+         * Если открыть консоль браузера - потому что все данные из консоли будут выводиться именно туда
+         * станет ясно что на самом деле метод addPost вызванный из Content.jsx выполняется в двух случаях:
+         *
+         * <button size="Large" className='PostButton1' onClick={ store.addPost.bind(store)} >Add post</button>
+         * И
+         * <button size="Large" className='PostButton1' onClick={ store.addPost(newPostElement)} >Add post</button>
+         * ну или такая вариация тоже есть:
+         *     <button size="Large" className='PostButton1' onClick={ store.addPost("message from me")} >Add post</button>
+         *
+         * И данные добавляются из поста. Проблема только в том что нужно перейти на другую вкладку чтобы появилось сообщение
+         * и перезагружать нельзя (потому как тогда приложение перезапустится).
+         * Это проблема отсутствия соединения с базой данных - будет решена позже.
+         *
+         */
+        console.log(store.getState().postsData);
 }
 
 }
-
-
-    /*
-    state.postsData.push(newPost);
-    Content.postsData.push(newPost);
-    */
-    /**
-     * Здесь сообщение которое мы получили - мы отправляем в наш список postsData. А postsData вероятно
-     * передаем в render.js(где они и отрисовываются)
-     */
-
-
-
-
-
+/**
+ * Здесь сообщение которое мы получили - мы отправляем в наш список postsData. А postsData вероятно
+ * передаем в render.js(где они и отрисовываются). В render.js мы импортируем store
+ */
 export default store;
 
 /**
@@ -114,25 +125,3 @@ export default store;
  store у нас в данный момент будет использовать ООП
  */
 window.store = store;
-
-
-
-
-/**export let addPost = (postMessage) => {
-возможно сюда должен прилетать через props данные метода addPost? из content.jsx
- Они по идее прилетают через props
- */
-
-/**
- https://www.youtube.com/watch?v=Bq_tmt-hRn0&list=PLcvhF2Wqh7DNVy1OCUpG3i5lyxyBWhGZ8&index=38
- нужно связать эту кнопку с методом добавления данных
- данные будут добавляться в state.js
- message: this.Content.postMessage,
- message: this._state.Content.Post.postMessage,
- message: this._state.postMessage,
- message: this.postMessage,
- message: props.addPost(),
-
- This was almost correct but not(at least didn't trigger an error:
- message: postMessage,
- */
