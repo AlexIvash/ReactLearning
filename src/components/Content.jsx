@@ -1,18 +1,20 @@
-import React, {useRef} from 'react';
 import './Content.css';
 import Posts from './Posts';
 import store from "./../Redux/State";
-
+import React from 'react';
 
 const Content = (props) => {
-   //const newPostElement = useRef(null); Этот вариант возможно был валиден, но оказался не нужен
     const newPostElement = React.createRef();
+    const newPostElementAddPhoto = React.createRef();
 
     /**
      * Это было костыльное решение, но в итоге onChange не нужен
+     Этот onChange:
+     <textarea type="text" ref={newPostElement} onChange={readTextWhenChanged} />
+
      * потому что onChange всегда считывает значение из того что юзер вводит в поле. Я оставлю как пример,
      * но на самом деле эта функция совсем не нужна.
-     *
+
      * Метод рабочий, но закомментирован чтобы не забивать лишний раз память
      */
     function readTextWhenChanged() {
@@ -31,7 +33,8 @@ const Content = (props) => {
          * console.log("I am in handleAddPostClick, inputData is: " + newPostElement.current.focus()); - это некорректный вариант
           */
         const inputData = newPostElement.current.value;
-        store.addPost(inputData);
+        const newPostImage = newPostElementAddPhoto.current.value;
+        store.addPost(inputData, newPostImage);
         }
 
     /**
@@ -53,13 +56,17 @@ Oleksandr(you)
 </div>
 <div className='Posts'>
 <div className='PostButtons'>
+    <p>Add your message and url of image here: </p>
 <textarea type="text" ref={newPostElement} onChange={readTextWhenChanged} />
-
+    <br></br>
+    <p>image link:</p>
+<input type="text" ref={newPostElementAddPhoto} />
+    <br></br>
     {/**
      Здесь мы вызываем метод handleAddPostClick который берет данные из textarea, пишет их в переменную inputData и передает
      в State.js
      */}
-<input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick} value="add post" />
+<input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick} value="Add post" />
 <button size="Large" className='PostButton2' onClick={ () => {alert('I will remove a post')} }>Remove</button>
 </div>
 </div>

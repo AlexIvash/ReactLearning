@@ -36,6 +36,8 @@
     ]
   },
   "devDependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
     "react-dev-utils": "^10.2.1",
     "react-scripts": "^3.4.3"
   }
