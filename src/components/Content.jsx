@@ -7,6 +7,7 @@ import store from "./../Redux/State";
 const Content = (props) => {
    //const newPostElement = useRef(null); Этот вариант возможно был валиден, но оказался не нужен
     const newPostElement = React.createRef();
+    const newPostElementAddUserPhoto = React.createRef();
 
     /**
      * Это было костыльное решение, но в итоге onChange не нужен
@@ -31,7 +32,8 @@ const Content = (props) => {
          * console.log("I am in handleAddPostClick, inputData is: " + newPostElement.current.focus()); - это некорректный вариант
           */
         const inputData = newPostElement.current.value;
-        store.addPost(inputData);
+        const userPhoto = newPostElementAddUserPhoto.current.value;
+        store.addPost(inputData, userPhoto);
         }
 
     /**
@@ -53,13 +55,17 @@ Oleksandr(you)
 </div>
 <div className='Posts'>
 <div className='PostButtons'>
+    <p>Add your message and url of image here: </p>
 <textarea type="text" ref={newPostElement} onChange={readTextWhenChanged} />
-
+    <br></br>
+    <p>image link:</p>
+<input type="text" ref={newPostElementAddUserPhoto} />
+    <br></br>
     {/**
      Здесь мы вызываем метод handleAddPostClick который берет данные из textarea, пишет их в переменную inputData и передает
      в State.js
      */}
-<input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick} value="add post" />
+<input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick} value="Add post" />
 <button size="Large" className='PostButton2' onClick={ () => {alert('I will remove a post')} }>Remove</button>
 </div>
 </div>

@@ -7,6 +7,7 @@ import Content from './../components/Content';
  с Back-End часть вроде node js express app.
  */
 
+
 let store = {
 _state: {
     postsData: [
@@ -62,56 +63,63 @@ _state: {
      * textFromNewPost - это сообщение которое берется из поля ввода на странице content.jsx
      * и мы передаем его сюда из страницы Content (под роутом profile)
      */
-     addPost(textFromNewPost){
+     addPost(textFromNewPost, userPhoto){
     console.log("I am addPost");
         if(textFromNewPost===undefined||textFromNewPost===null||!textFromNewPost.length||!textFromNewPost){
             /**
              * Вместо пустого message будет добавляться техническое сообщение
              */
-            const textFromNewPost  = "Due to technical issue we can't read your data from text-area now. Please try it after fixing code";
-            let newPost = {
-                imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
-                message: textFromNewPost,
-                likesCount: '0',
-                Comments: '1',
-                UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
-            };
-            this._state.postsData.push(newPost);
-            console.log(textFromNewPost);
+            let textFromNewPost  = "Due to technical issue we can't read your data from text-area now. Please try it after fixing code";
+            if (userPhoto===undefined||userPhoto===null||!userPhoto.length||!userPhoto) {
+                /**
+                 * Вместо пустого userPhoto будет добавляться hard-code картинка
+                 */
+               let userPhoto = "https://camo.githubusercontent.com/a94717d64129c017b934e8d300f735d3a2f2a34b31e52ac748e0d132127a72b3/68747470733a2f2f6a656e737365676572732e636f6d2f7374617469632f6d656469612f6167656e742e706e67";
+
+               /**
+                 * Так как сейчас здесь массив вместо базы данных то для того чтобы проверить что сообщение было добавлено
+                 * необходимо перейти на другую вкладку приложения и вернуть назад. Но нельзя перезагружать страницу
+                 * потому что массив при перезагрузке страницы обнуляется.
+                 */
+                let newPost = {
+                    imgUrl: 'https://i.obozrevatel.com/nerukhomi/stroitelstvo/2020/1/28/12186.webp?size=768x432',
+                    message: textFromNewPost,
+                    likesCount: '0',
+                    Comments: '1',
+                    UserPhoto: userPhoto
+                };
+                this._state.postsData.push(newPost);
+                console.log(textFromNewPost);
+
+                /**
+                 * Если открыть консоль браузера - потому что все данные из консоли будут выводиться именно туда
+                 * станет ясно что на самом деле метод addPost вызванный из Content.jsx выполняется в двух случаях:
+                 *
+                 * <button size="Large" className='PostButton1' onClick={ store.addPost.bind(store)} >Add post</button>
+                 * И
+                 * <button size="Large" className='PostButton1' onClick={ store.addPost(newPostElement)} >Add post</button>
+                 * ну или такая вариация тоже есть:
+                 *     <button size="Large" className='PostButton1' onClick={ store.addPost("message from me")} >Add post</button>
+                 *
+                 * И данные добавляются из поста. Проблема только в том что нужно перейти на другую вкладку чтобы появилось сообщение
+                 * и перезагружать нельзя (потому как тогда приложение перезапустится).
+                 * Это проблема отсутствия соединения с базой данных - будет решена позже.
+                 *
+                 */
+                console.log(store.getState().postsData);
+            }
         } else {
-            /**
-             * Так как сейчас здесь массив вместо базы данных то для того чтобы проверить что сообщение было добавлено
-             * необходимо перейти на другую вкладку приложения и вернуть назад. Но нельзя перезагружать страницу
-             * потому что массив при перезагрузке страницы обнуляется.
-             */
             let newPost = {
-                imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
+                imgUrl: 'https://i.obozrevatel.com/nerukhomi/stroitelstvo/2020/1/28/12186.webp?size=768x432',
                 message: textFromNewPost,
                 likesCount: '0',
                 Comments: '1',
-                UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
+                UserPhoto: userPhoto
             };
             this._state.postsData.push(newPost);
             console.log(textFromNewPost);
         }
-        /**
-         * Если открыть консоль браузера - потому что все данные из консоли будут выводиться именно туда
-         * станет ясно что на самом деле метод addPost вызванный из Content.jsx выполняется в двух случаях:
-         *
-         * <button size="Large" className='PostButton1' onClick={ store.addPost.bind(store)} >Add post</button>
-         * И
-         * <button size="Large" className='PostButton1' onClick={ store.addPost(newPostElement)} >Add post</button>
-         * ну или такая вариация тоже есть:
-         *     <button size="Large" className='PostButton1' onClick={ store.addPost("message from me")} >Add post</button>
-         *
-         * И данные добавляются из поста. Проблема только в том что нужно перейти на другую вкладку чтобы появилось сообщение
-         * и перезагружать нельзя (потому как тогда приложение перезапустится).
-         * Это проблема отсутствия соединения с базой данных - будет решена позже.
-         *
-         */
-        console.log(store.getState().postsData);
 }
-
 }
 /**
  * Здесь сообщение которое мы получили - мы отправляем в наш список postsData. А postsData вероятно

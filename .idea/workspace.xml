@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Redux/State.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/State.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Content.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Content.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +73,8 @@
       <workItem from="1605345028107" duration="3377000" />
       <workItem from="1605527237047" duration="8872000" />
       <workItem from="1605562953793" duration="4261000" />
-      <workItem from="1605722914566" duration="12642000" />
+      <workItem from="1605722914566" duration="13015000" />
+      <workItem from="1605799086475" duration="3458000" />
     </task>
     <servers />
   </component>
