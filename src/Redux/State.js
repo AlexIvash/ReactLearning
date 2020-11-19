@@ -49,8 +49,9 @@ _state: {
         }
     ],*/
     getPostsFromDataBase() {
+        //example: SELECT JSON_ARRAYAGG(JSON_OBJECT('name', name, 'phone', phone)) from Person;
         try {
-            connection.query("SELECT * FROM postsdata", function (err, rows, fields) {
+            connection.query("SELECT JSON_ARRAYAGG(JSON_OBJECT('imgurl', imgurl, 'message', message, 'likesCount', likesCount, 'comments', comments, 'userphoto', userphoto)) FROM postsdata", function (err, rows, fields) {
                 if (err) {
                     console.log(err);
                     throw err;
@@ -62,18 +63,20 @@ _state: {
                         UserPhoto: ''}
                     return posts;
                 } else {
-
                     //we need somehow to return as much posts as rows in the table and we need to return it in array
-                    let posts={  imgUrl: rows[0].imgurl,
+                    //мы вероятно можем добавить id и как-то выводить по айдишнику?
+                    /*
+                    так как там мы выбираем все данные в json то это нам видимо не понадобится
+                    let posts={imgUrl: rows[0].imgurl,
                         message: rows[0].message,
                         likesCount: rows[0].likesCount,
                         Comments: rows[0].comments,
                         UserPhoto: rows[0].userphoto}
-                    return posts;
+                    return posts;*/
                 }
             })
         } catch (e) {
-            return done(e)
+            return e;
         }
     },
     messagesData: [
