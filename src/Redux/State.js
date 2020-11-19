@@ -1,6 +1,21 @@
 import {renderEntireTree} from '../render';
 import React from "react";
 import Content from './../components/Content';
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'password',
+    database:'reactapp'
+});
+
+try {
+    connection.connect();
+} catch(e) {
+    console.log('Oops.Connection to MySql failed.');
+    console.log(e);
+}
 
 /**
  Вероятно на этой странице мы могли бы добавлять эти данные в базу данных. И с этой страницы происходило бы общение
@@ -10,7 +25,7 @@ import Content from './../components/Content';
 
 let store = {
 _state: {
-    postsData: [
+   /* postsData: [
         {
             imgUrl: 'https://i.ytimg.com/vi/v_mBNCZ_jfA/maxresdefault.jpg',
             message: "Here is my photo of newely started building",
@@ -32,7 +47,35 @@ _state: {
             Comments: '50',
             UserPhoto: 'https://img1.freepng.ru/20180804/ejc/kisspng-estate-agent-realty-world-elfi-gayrimenkul-real-es-5b6573badd2220.8651037515333754189058.jpg'
         }
-    ],
+    ],*/
+    getPostsFromDataBase() {
+        try {
+            connection.query("SELECT * FROM postsdata", function (err, rows, fields) {
+                if (err) {
+                    console.log(err);
+                    throw err;
+                } else if (!rows.length) {
+                   let posts={  imgUrl: '',
+                        message: "We can't find data in the database",
+                        likesCount: '0',
+                        Comments: '0',
+                        UserPhoto: ''}
+                    return posts;
+                } else {
+
+                    //we need somehow to return as much posts as rows in the table and we need to return it in array
+                    let posts={  imgUrl: rows[0].imgurl,
+                        message: rows[0].message,
+                        likesCount: rows[0].likesCount,
+                        Comments: rows[0].comments,
+                        UserPhoto: rows[0].userphoto}
+                    return posts;
+                }
+            })
+        } catch (e) {
+            return done(e)
+        }
+    },
     messagesData: [
         {
             name: "Friend of mine",

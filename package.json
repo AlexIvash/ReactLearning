@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "mysql2": "^2.2.5",
     "react-dev-utils": "^10.2.1",
     "react-scripts": "^3.4.3"
   }
