@@ -27,11 +27,31 @@ grid-gap: 1%;
 }
 .Messages {
 display: grid;
-    margin-top:10%;
+margin-top:10%;
 /*grid-template-rows: 60px 1fr;*/
 /*grid-template-columns: 2fr 10fr;*/
 grid-gap: 1%;
 }
-
-
-
+ .DialogPageNewMessage {
+     display: grid;
+     margin-top: 50px;
+ }
+ .PostButton1 {
+     size: inherit;
+     color: navy;
+     border-radius:30px;
+     background-color: -moz-mac-accentdarkshadow;
+     webkit-appearance:none;
+     width: 150px;
+ }
+ .PostButton2 {
+     color: crimson;
+     border-radius:30px;
+     background-color: -moz-mac-accentdarkshadow;
+     webkit-appearance:none;
+     width: 150px;
+ }
+ .textarea {
+     width: 700px;
+     height: 100px;
+ }

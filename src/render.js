@@ -9,8 +9,9 @@ import store from "./Redux/State";
 
 export let renderEntireTree = (state) => {
 ReactDOM.render(
-<App state={store.getState} addPost={store.addPost.bind(store)} />, document.getElementById('root'));
-   /*
+<App state={store.getState} addPost={store.dispatch.bind(store)} />, document.getElementById('root'));
+
+/*
    bind addPost указывает именно на метод addPost в файле State.js
    <App state={store._state} addPost={store.addPost.bind(store)} />, document.getElementById('root'));
    addPost в данный момент - не callback - потому что мы его не вызываем из этой функции - а просто вызываем его там где он лежит
