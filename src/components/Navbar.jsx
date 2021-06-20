@@ -16,6 +16,10 @@ return (
         Profile
     </NavLink>
 
+    <NavLink to ="/Users" className= "Users">
+        Users
+    </NavLink>
+
     <NavLink to ="/Dialogs" className= "Dialogs">
         Messages
     </NavLink>

@@ -112,7 +112,6 @@ let store = {
         // был предназнаен для profileReducer - он шел в profileReducer, возвращался, а потом шел в dialogsReducer и оттуда ничего не возвращалось по умолчанию, когда НИ ОДИН
         // из case не подходил. Если в if/else операторе был else в котором можно было сделать return, то в case операторе нужно было после оператора switch поставить return postsData для
         // profileReducer и return messagesData для dialogs-reducer.
-
         this._callSubscriber(this._state);
 
 

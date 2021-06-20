@@ -3,7 +3,7 @@ grid-area: c;
 /*background-color: cornflowerblue;*/
 margin: 0px;
 padding: 0px;
-    height: 10px;
+height: 10px;
     /*
     height should always be a small number - because in other case
     it expands so much that we can't work with it.
