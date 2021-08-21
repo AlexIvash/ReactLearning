@@ -1,6 +1,8 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 /**
  * возможно названия переменных здесь мне будет необходимо поменять
@@ -54,6 +56,11 @@ const usersReducer = ( state = initialState, action) => {
             }
         /**
          * здесь мы возвращаем пользователей для users, которые к нам пришли из запроса на url и которых мы записали в ...state.
+         * Важный момент - если бы мы оставили здесь     return {...state, users: [...state.users, ...action.users]} - получилось
+         * что при открытии страницы мы бы сетали новых пользователей в конце имеющегося списка пользователей
+         *
+         * НО - нам нужно перезатирать юзеров на одной странице и рисовать других пользователей на другой странице. Потому мы перепишем вот так вот:
+         * return {...state, users: action.users}
          */
         case SET_USERS: {
            // const setUsers = () => { оно пишет что setUsers - это не функция. Но такое вот мне не помогло
@@ -67,17 +74,35 @@ const usersReducer = ( state = initialState, action) => {
             //из action.
             //state уже имеет этих users. Через оператор"..." эти users раскрываются и вот к ним добавляется action.users и тд.
             //оператор "..." называется "spread". Он как бы открывает данные какого-либо элемента или массива или возможно JSON'а.
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
             }
-        //}
+        /**
+         * Здесь нам не нужен spread оператор который скопирует currentPage, потому что это значение мы будем перезаписывать
+         * когда пользователь выберет свою определенную страничку.
+         */
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: [...state.users, action.currentPage]}
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {...state, totalUsersCount: action.count}
+        }
 
         default:
             return state;
     }
 }
 
+/**
+ * AC - Action Creator
+ * каждый из них принимает что-то, и что-то отдает. На примере первого - принимает userId и userId отдает
+ *
+ * export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage: currentPage}); можно записать и так, но не обязательно, потому что currentPage
+ * и так будет равен значению переменной фактически
+ */
 export const followAC = (userId) => ({type: FOLLOW, userId});
 export const unfollowAC = (userId) => ({type: UNFOLLOW, userId});
 export const setUsersAC = (users) => ({type: SET_USERS, users});
+export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
+export const setUsersTotalCountAC = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
 
 export default usersReducer;

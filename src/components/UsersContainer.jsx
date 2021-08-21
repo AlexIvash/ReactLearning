@@ -1,7 +1,7 @@
 import React from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
-import {followAC, unfollowAC,setUsersAC} from '../Redux/users-reducer.js';
+import {followAC, unfollowAC,setUsersAC, setCurrentPageAC, setUsersTotalCountAC} from '../Redux/users-reducer.js';
 
 /**
  * Эта функция принимает весь глобальный state целиком и передает сюда в props для компоненты Users.
@@ -29,7 +29,8 @@ let mapStateToProps = (state) => {
 
 /**
  * Это вторая функция, которая служит для того чтобы передавать callback-функции компоненте Users
- * Здесь будут функции, которые компонента может вызывать.
+ * Здесь будут функции, которые компонента может вызывать. Функции - ActionCreator'ы. Но мы как бы не их диспатчим, а функции
+ * которые эти actioncreator'ы вызывают(хотя лучше сильно в это не вдумываться).
  *
  * Эти функции в свою очередь вызывают функцию action creator в users-reducer. Мы вызываем не сам action Creator, а результат
  * работы action Creator (чтобы это не значило). А action creator возвращает нам определенный action, то есть мы диспатчим
@@ -47,6 +48,12 @@ let mapDispatchToProps = (dispatch) => {
         },
         setUsers: (users) => {
             dispatch(setUsersAC(users));
+        },
+        setCurrentPage: (pageNumber) => {
+            dispatch(setCurrentPageAC(pageNumber));
+        },
+        setTotalCount: (totalCount) => {
+            dispatch(setUsersTotalCountAC(totalCount));
         }
     }
 }
