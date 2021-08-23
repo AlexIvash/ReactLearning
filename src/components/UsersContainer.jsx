@@ -2,6 +2,79 @@ import React from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
 import {followAC, unfollowAC,setUsersAC, setCurrentPageAC, setUsersTotalCountAC} from '../Redux/users-reducer.js';
+import axios from "axios";
+//import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
+
+/**
+ * Контейнерная компонента для АПИ-запросов. Это та часть, которая не связана с другими функциями этой контейнерной компоненты.
+ */
+class UsersContainer extends React.Component {
+    /**
+     * Это GET API запрос с параметрами после знака вопроса (page, count) которые вытягивают номер текущей страницы и количество пользователей на одной странице. Данные для этого запроса
+     * берутся из this.props.currentPage, this.props.pageSize которые тянутся изначально из users-reducer. То есть какие значения пользователь выберет - такими они и будут вставлены в этот запрос и
+     * такие пользователи подтянутся на страницу.
+     * Для проверки работоспособности url можно вручную выполнить get запрос в браузере:
+     * https://social-network.samuraijs.com/api/1.0/users?page=3&count=10
+     *
+     *
+     * ВНИМАНИЕ! ЗДЕСЬ ЛЕГКО ОШИБИТЬСЯ И СОЗДАТЬ БАГ из-за одинарных кавычек! Есть кавычки одинарные, есть двойные, а есть кавычки которые стоят возле ~. Так вот именно эти кавычки
+     * возле знака ~ - `и нужно выбрать, иначе не будет работать - НЕ будет тянуться this.props.currentPage.
+     *
+     componentDidMount - при инициализации компоненты подтягивает первую страницу всех пользователей по умолчанию(this.props.currentPage в users-reducer до момента перезаписи этого значения - то есть когда мы просто
+     открываем страницу users - всегда равен ПЕРВОЙ СТРАНИЦЕ,
+     до момента пока значение pageNumber после клика не перезапишет то значение в users-reducer),
+     а вот уже уже при определенном клике по конкретной странице - пользователь выбирает другую
+     страницу (значение pageNumber)и еще раз делает запрос на сервер но уже с номером другой страницы. pageSize имеет смысл брать из props, потому что он не меняется. Так работает метод onPageChanged.
+
+     Возможено, для componentDidMount следовало бы по умолчанию показа
+     */
+    componentDidMount() {
+        // const axios = require('axios');//эта хрень не обязательна, но пусть будет.
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setTotalCount(response.data.totalCount);
+            });
+
+        //response.data.items - это и есть массив пользователей который приходит в ответе
+        //причем получается что здесь мы props задаем и здесь же в конструкторе эти props принимаем
+        //setUsers - через него мы общаемся со State.
+
+        //этот метод делает setUsers в файле users-reducer.js и там есть return ...state, через который мы и получаем пользователей назад. Вероятно,
+        // эти пользователи через props прилетают в этот метод.
+    }
+
+    /**
+     * Функция выполняет запрос на сервер с просьбой дать именно указанное количество пользователей и отобразить их на конкретной странице по счету - то есть именно эта
+     * функция будет делать запрос. Так как это обработчик html - принимает параметры e(event), но так как мы в нее передадим параметр номера страницы - pageNumber, то его заменим
+     * для удобства на pageNumber.
+     * this.props.setCurrentPage(pageNumber) - вызывает dispatch метод из users-reducer и из usersContainer и использует его для установки текущей выбраной страницы пользователем,
+     которую пользователь и выберет.
+
+     pageNumber здесь так же используется в API запросе в отличии от того метода в componentDidMount, который использует значение из props. Значение в props для componentDidMount -
+     старая, открытая уже страница а не та по которой кликнули, та по которой кликнули - pageNumber.
+     */
+    onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+            });
+    }
+    render() {
+        return <Users totalUsersCount={this.props.totalUsersCount}
+                      pagesize={this.props.pageSize}
+                      currentPage={this.props.currentPage}
+                      onPageChanged={this.onPageChanged}
+                      users={this.props.users}
+                      follow={this.props.follow}
+                      unfollow={this.props.unfollow}/>
+    }
+}
+
+/**
+ * Контейнерная компонента для функция для users компоненты.
+ */
 
 /**
  * Эта функция принимает весь глобальный state целиком и передает сюда в props для компоненты Users.
@@ -58,12 +131,14 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-
 {/**
- здесь берется компонента users и оборачивается в props, чтобы сработали dispatch методы
- причем сюда передасться users: state.usersPage.users и с помощью метода mapStateToProps в Users будет сидеть свойство users
+ здесь берется компонента UsersContainer(до этого была просто Users компонента) и оборачивается в props, чтобы сработали dispatch методы
+ причем сюда передасться users: state.usersPage.users и с помощью метода mapStateToProps в UsersContainer(до этого была просто Users компонента) будет сидеть свойство users.
+
+ Так как раньше мы оборачивали Users container передавая этой компоненте данные, ее не нужно было вызывать в коде. Теперь нам необходимо ЗДЕСЬ вызвать Users компоненту. Поэтому будет добавлен
+ код render для отрисовки Users компоненты
  */}
-export default connect(mapStateToProps, mapDispatchToProps) (Users);
+export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
 
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.

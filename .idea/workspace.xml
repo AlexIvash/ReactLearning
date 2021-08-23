@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Redux/users-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/users-reducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
     </list>
@@ -107,7 +106,9 @@
       <workItem from="1628517111975" duration="4603000" />
       <workItem from="1629142141983" duration="6728000" />
       <workItem from="1629461780150" duration="234000" />
-      <workItem from="1629544518119" duration="9934000" />
+      <workItem from="1629544518119" duration="10306000" />
+      <workItem from="1629633064065" duration="66000" />
+      <workItem from="1629709381527" duration="4285000" />
     </task>
     <servers />
   </component>
@@ -125,17 +126,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/components/UsersContainer.jsx</url>
-          <line>40</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
