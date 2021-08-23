@@ -1,8 +1,16 @@
 import React from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
-import {followAC, unfollowAC,setUsersAC, setCurrentPageAC, setUsersTotalCountAC} from '../Redux/users-reducer.js';
+import {
+    followAC,
+    unfollowAC,
+    setUsersAC,
+    setCurrentPageAC,
+    setUsersTotalCountAC,
+    toggleIsFetchingAC
+} from '../Redux/users-reducer.js';
 import axios from "axios";
+import preloader from './../profilePhoto/preloader.gif';
 //import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
 
 /**
@@ -30,8 +38,13 @@ class UsersContainer extends React.Component {
      */
     componentDidMount() {
         // const axios = require('axios');//эта хрень не обязательна, но пусть будет.
+        this.props.toggleIsFetching(true);//Во время инициализации компоненты мы говорим, что запрос пошел - данные начинают грузиться
+        //и мы меняем это свойство на true, поэтому появляется loader ровно до момента, пока компонента не будет смонтирована до самого конца. Нужно будет подобную логику написать
+        //и для постов на Content странице
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
+                //чтобы прекратить работу preloader'а
                 this.props.setUsers(response.data.items);
                 this.props.setTotalCount(response.data.totalCount);
             });
@@ -55,20 +68,29 @@ class UsersContainer extends React.Component {
      старая, открытая уже страница а не та по которой кликнули, та по которой кликнули - pageNumber.
      */
     onPageChanged = (pageNumber) => {
+        this.props.toggleIsFetching(true);//Когда происходит изменения страницы - то есть выполняется новый запрос -
+        // мы говорим, что запрос пошел - данные начинают грузиться
         this.props.setCurrentPage(pageNumber);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
+                //чтобы прекратить работу preloader'а
                 this.props.setUsers(response.data.items);
             });
     }
     render() {
-        return <Users totalUsersCount={this.props.totalUsersCount}
+        return <>{/*Эта хрень нужна для чего-то, но я так и не понял для чего. Это вместо фрагмента react'a. На тайм коде 10:13 https://www.youtube.com/watch?v=qE8ThPt1EIM&t=385s*/}
+            {this.props.isFetching ? <img src={preloader} />: null}{/*Если данные в данный момент идут - тогда идет картинка загрузки, если загрузки данных не происходит, то есть
+            isFetching ==false, тогда null - то есть ничего не отобразится */}
+            <Users totalUsersCount={this.props.totalUsersCount}
                       pagesize={this.props.pageSize}
                       currentPage={this.props.currentPage}
                       onPageChanged={this.onPageChanged}
                       users={this.props.users}
                       follow={this.props.follow}
-                      unfollow={this.props.unfollow}/>
+                      unfollow={this.props.unfollow}
+            />
+            </>
     }
 }
 
@@ -96,14 +118,16 @@ let mapStateToProps = (state) => {
         //state.usersPage нам теперь доступен, потому что в redux-store мы указали что usersPage будет обслуживаться users-reducer
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching//isFetching - идет ли процесс получения данных. Если false - нет, если идут - тогда true
     }
 }
 
 /**
  * Это вторая функция, которая служит для того чтобы передавать callback-функции компоненте Users
  * Здесь будут функции, которые компонента может вызывать. Функции - ActionCreator'ы. Но мы как бы не их диспатчим, а функции
- * которые эти actioncreator'ы вызывают(хотя лучше сильно в это не вдумываться).
+ * которые эти actioncreator'ы вызывают. Потому что actionCreator'ы возвращают нам объект и вот мы диспатчим именно сам объект(хотя лучше сильно в это не вдумываться).
+ * Мы пока не умеем диспатчить ничего, кроме объектов. Если диспатчить что-то другое - будет ошибка, потому что react не может диспатчить ничего кроме объекта
  *
  * Эти функции в свою очередь вызывают функцию action creator в users-reducer. Мы вызываем не сам action Creator, а результат
  * работы action Creator (чтобы это не значило). А action creator возвращает нам определенный action, то есть мы диспатчим
@@ -127,6 +151,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setTotalCount: (totalCount) => {
             dispatch(setUsersTotalCountAC(totalCount));
+        },
+        toggleIsFetching: (isFetching) => {
+            dispatch(toggleIsFetchingAC(isFetching));
         }
     }
 }

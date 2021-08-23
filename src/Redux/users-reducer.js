@@ -3,6 +3,8 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+//значит, включить если выключено и выключить если включено - то есть переключатель
 
 /**
  * возможно названия переменных здесь мне будет необходимо поменять
@@ -20,7 +22,8 @@ let initialState = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching:false//отвечает за получения данных. По умолчанию данные не передаются, до момента пока не перезапишется на true.
 };
    // users: [Нам это не нужно, так как дальше презентационная компонента сама будет добавлять пользователей сюда
         // { id:1, photoUrl: "https://lh3.googleusercontent.com/proxy/B6W7bNkG7Hv6tkhBz96FXVfC5R94bRP7J0w9PHWzg0VwOQtQKibyBUbsU_FlLw_gaK5RuPGZxtqaI154LVoWQbb7L6NGIXmgimXfPZPhvjAhShQ3znl_ODBPc88xd_FO9nwsXE9obEQniw", followed: false, fullName: "Oleksiy", status: "TestMessage", location: {city: "Kiev", country: "Ukraine"}},
@@ -85,6 +88,8 @@ const usersReducer = ( state = initialState, action) => {
         }
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.count}
+        }case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
         }
 
         default:
@@ -93,16 +98,20 @@ const usersReducer = ( state = initialState, action) => {
 }
 
 /**
- * AC - Action Creator
+ * AC - Action Creator. Это все - функции Action Creator, которые и отвечают за логику переключения чего-либо под влиянием action
  * каждый из них принимает что-то, и что-то отдает. На примере первого - принимает userId и userId отдает
  *
  * export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage: currentPage}); можно записать и так, но не обязательно, потому что currentPage
  * и так будет равен значению переменной фактически
+ *
+ * Данные прилетают сюда из функции dispatch в UsersContainer
  */
 export const followAC = (userId) => ({type: FOLLOW, userId});
 export const unfollowAC = (userId) => ({type: UNFOLLOW, userId});
 export const setUsersAC = (users) => ({type: SET_USERS, users});
 export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setUsersTotalCountAC = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
+export const toggleIsFetchingAC = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});//принимает true/false isFetching. Если reducer из action достает
+//свойство isFetching - тогда эти данные мы должны
 
 export default usersReducer;
