@@ -1,5 +1,5 @@
 import React from 'react';
-import profilePhoto from '../profilePhoto/profilePhoto.jpeg';
+import profilePhoto from '../common/profilePhoto.jpeg';
 import styles from "./Users.module.css";
 
 

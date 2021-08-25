@@ -2,15 +2,25 @@ import React from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    followAC,
+   /* followAC,
     unfollowAC,
     setUsersAC,
     setCurrentPageAC,
     setUsersTotalCountAC,
     toggleIsFetchingAC
+    ^^Это было переименовано в связи с рефакторингом функции mapDispatchToProps для Connect.
+    */
+
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setUsersTotalCount,
+    toggleIsFetching
 } from '../Redux/users-reducer.js';
 import axios from "axios";
-import preloader from './../profilePhoto/preloader.gif';
+//import preloader from '../common/preloader.gif';
+import Preloader from "../common/preloader";
 //import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
 
 /**
@@ -46,7 +56,7 @@ class UsersContainer extends React.Component {
                 this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
                 //чтобы прекратить работу preloader'а
                 this.props.setUsers(response.data.items);
-                this.props.setTotalCount(response.data.totalCount);
+                this.props.setUsersTotalCount(response.data.totalCount);
             });
 
         //response.data.items - это и есть массив пользователей который приходит в ответе
@@ -79,8 +89,12 @@ class UsersContainer extends React.Component {
             });
     }
     render() {
-        return <>{/*Эта хрень нужна для чего-то, но я так и не понял для чего. Это вместо фрагмента react'a. На тайм коде 10:13 https://www.youtube.com/watch?v=qE8ThPt1EIM&t=385s*/}
-            {this.props.isFetching ? <img src={preloader} />: null}{/*Если данные в данный момент идут - тогда идет картинка загрузки, если загрузки данных не происходит, то есть
+        return <>{/*Эта хрень нужна для чего-то, но я так и не понял для чего.
+        Это вместо фрагмента react'a. На тайм коде 10:13 https://www.youtube.com/watch?v=qE8ThPt1EIM&t=385s*/}
+            {/*{this.props.isFetching ? <div><img src={preloader} /></div>: null} так было до - использовали картинку
+            потом картинку вынесли отденъльно в js файл и там ее уже можно модифицировать как угодно для удобства*/}
+            {this.props.isFetching ? <Preloader />: null}
+                 {/*Если данные в данный момент идут - тогда идет картинка загрузки, если загрузки данных не происходит, то есть
             isFetching ==false, тогда null - то есть ничего не отобразится */}
             <Users totalUsersCount={this.props.totalUsersCount}
                       pagesize={this.props.pageSize}
@@ -132,9 +146,16 @@ let mapStateToProps = (state) => {
  * Эти функции в свою очередь вызывают функцию action creator в users-reducer. Мы вызываем не сам action Creator, а результат
  * работы action Creator (чтобы это не значило). А action creator возвращает нам определенный action, то есть мы диспатчим
  * всегда какой-либо action.
+ *
+ *
+ *
+ * UPDATE: Эта функция была сокращена до более просто записи в export const. Так же стоит сказать,
+ *
+ * что this.props.setTotalCount(response.data.totalCount); была переименована в this.props.setUsersTotalCount(response.data.totalCount);. Ее тоже стоит вернуть
+ * для работы старой версии этой функции
  * @param dispatch
  * @returns {{setUsers: setUsers, follow: G.IOptions.follow, unfollow: unfollow}}
- */
+
 let mapDispatchToProps = (dispatch) => {
     return {
         follow: (userId) => {
@@ -157,16 +178,44 @@ let mapDispatchToProps = (dispatch) => {
         }
     }
 }
-
+ */
 {/**
  здесь берется компонента UsersContainer(до этого была просто Users компонента) и оборачивается в props, чтобы сработали dispatch методы
  причем сюда передасться users: state.usersPage.users и с помощью метода mapStateToProps в UsersContainer(до этого была просто Users компонента) будет сидеть свойство users.
 
  Так как раньше мы оборачивали Users container передавая этой компоненте данные, ее не нужно было вызывать в коде. Теперь нам необходимо ЗДЕСЬ вызвать Users компоненту. Поэтому будет добавлен
  код render для отрисовки Users компоненты
- */}
-export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
 
+ * UPDATE: Эта функция была сокращена до более просто записи в export const
+
+export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
+ */}
+
+/**
+ * Здесь теперь более сокращенный вариант mapDispatchToProps(выше в коментариях полный вариант этой функции). Здесь уже прямые ссылки на объект Action Creators.
+ * Connect здесь проверяет, что ему пришла не функция а объект и делает обертывание этих пришедших ему значений CallBack'ами (для вызова Action Creator'ов ?)
+ *
+ *export default connect(mapStateToProps, {
+    follow: followAC(),
+    unfollow: unfollowAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalCount: setUsersTotalCountAC,
+    toggleIsFetching: toggleIsFetchingAC
+}) (UsersContainer);
+ *
+ * Зачем такие сокращения кода? Для того, чтобы поменьше писать кода которые не связан с бизнес-логикой, но связан с обеспечением нормального функционирования наших компонент и связи со State.
+ *
+ * Вот еще более интересное сокращение кода - теперь он будет НЕ через две запятых, а просто без них. Он полностью равен записанному выше коду. Эти ссылки видут на функции в users-reducer.js
+ * файле. То есть здесь как бы не key:pair, а key и pair - одно и то же значение и это упрощенная версия получается
+ */
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setUsersTotalCount,
+    toggleIsFetching
+}) (UsersContainer);
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.
  export default UsersContainer; думаю что здесь это лишнее. В видео нашел момент в 49 части где здесь нету этого экспорта*/}
