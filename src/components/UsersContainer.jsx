@@ -2,14 +2,14 @@ import React from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-   /* followAC,
-    unfollowAC,
-    setUsersAC,
-    setCurrentPageAC,
-    setUsersTotalCountAC,
-    toggleIsFetchingAC
-    ^^Это было переименовано в связи с рефакторингом функции mapDispatchToProps для Connect.
-    */
+    /* followAC,
+     unfollowAC,
+     setUsersAC,
+     setCurrentPageAC,
+     setUsersTotalCountAC,
+     toggleIsFetchingAC
+     ^^Это было переименовано в связи с рефакторингом функции mapDispatchToProps для Connect.
+     */
 
     follow,
     unfollow,
@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 //import preloader from '../common/preloader.gif';
 import Preloader from "../common/preloader";
+
 //import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
 
 /**
@@ -56,7 +57,7 @@ class UsersContainer extends React.Component {
                 this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
                 //чтобы прекратить работу preloader'а
                 this.props.setUsers(response.data.items);
-                this.props.setUsersTotalCount(response.data.totalCount);
+                this.props.setUsersTotalCount(response.data.totalCount);//totalCount и остальное - свойства, берущиеся из get запроса.
             });
 
         //response.data.items - это и есть массив пользователей который приходит в ответе
@@ -88,23 +89,24 @@ class UsersContainer extends React.Component {
                 this.props.setUsers(response.data.items);
             });
     }
+
     render() {
         return <>{/*Эта хрень нужна для чего-то, но я так и не понял для чего.
         Это вместо фрагмента react'a. На тайм коде 10:13 https://www.youtube.com/watch?v=qE8ThPt1EIM&t=385s*/}
             {/*{this.props.isFetching ? <div><img src={preloader} /></div>: null} так было до - использовали картинку
             потом картинку вынесли отденъльно в js файл и там ее уже можно модифицировать как угодно для удобства*/}
-            {this.props.isFetching ? <Preloader />: null}
-                 {/*Если данные в данный момент идут - тогда идет картинка загрузки, если загрузки данных не происходит, то есть
+            {this.props.isFetching ? <Preloader/> : null}
+            {/*Если данные в данный момент идут - тогда идет картинка загрузки, если загрузки данных не происходит, то есть
             isFetching ==false, тогда null - то есть ничего не отобразится */}
             <Users totalUsersCount={this.props.totalUsersCount}
-                      pagesize={this.props.pageSize}
-                      currentPage={this.props.currentPage}
-                      onPageChanged={this.onPageChanged}
-                      users={this.props.users}
-                      follow={this.props.follow}
-                      unfollow={this.props.unfollow}
+                   pageSize={this.props.pageSize}
+                   currentPage={this.props.currentPage}
+                   onPageChanged={this.onPageChanged}
+                   users={this.props.users}
+                   follow={this.props.follow}
+                   unfollow={this.props.unfollow}
             />
-            </>
+        </>
     }
 }
 
@@ -156,7 +158,7 @@ let mapStateToProps = (state) => {
  * @param dispatch
  * @returns {{setUsers: setUsers, follow: G.IOptions.follow, unfollow: unfollow}}
 
-let mapDispatchToProps = (dispatch) => {
+ let mapDispatchToProps = (dispatch) => {
     return {
         follow: (userId) => {
             dispatch(followAC(userId));
@@ -188,8 +190,9 @@ let mapDispatchToProps = (dispatch) => {
 
  * UPDATE: Эта функция была сокращена до более просто записи в export const
 
-export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
- */}
+ export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
+ */
+}
 
 /**
  * Здесь теперь более сокращенный вариант mapDispatchToProps(выше в коментариях полный вариант этой функции). Здесь уже прямые ссылки на объект Action Creators.
@@ -215,7 +218,12 @@ export default connect(mapStateToProps, {
     setCurrentPage,
     setUsersTotalCount,
     toggleIsFetching
-}) (UsersContainer);
+})(UsersContainer);
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.
- export default UsersContainer; думаю что здесь это лишнее. В видео нашел момент в 49 части где здесь нету этого экспорта*/}
+ export default UsersContainer; думаю что здесь это лишнее. В видео нашел момент в 49 части где здесь нету этого экспорта.
+ Мы передаем эту функцию в Connect, Connect ее вызовет
+
+ UsersContainer в connect - это значит что мы еще как бы создаем контейнерную компоненту вокруг нашей контейнерной компоненты
+ */
+}

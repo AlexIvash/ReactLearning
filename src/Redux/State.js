@@ -115,28 +115,22 @@ let store = {
         this._callSubscriber(this._state);
 
 
-
-
-
-
-
-
         // this._state.newMessageBody = dialogsReducer(this._state.newMessageBody, action);
 
-/* Все, что было в этих функциях - теперь лежит в dialogs-reducer. Это оставлено здесь для удобства чтобы можно было вспомнить
-        if (action.type === 'ADD-POST') {
-        }
-        if(action.type === 'UPDATE-NEW-POST-TEXT') {
-        }
-        if(action.type==='DELETE-LAST-POST') {
-        }
-        if(action.type==='UPDATE-LAST-MESSAGE-BODY') {
-        }
-        if(action.type==='SEND-MESSAGE') {
-        }
-        if(action.type==='DELETE-LAST-MESSAGE') {
-        }
-        */
+        /* Все, что было в этих функциях - теперь лежит в dialogs-reducer. Это оставлено здесь для удобства чтобы можно было вспомнить
+                if (action.type === 'ADD-POST') {
+                }
+                if(action.type === 'UPDATE-NEW-POST-TEXT') {
+                }
+                if(action.type==='DELETE-LAST-POST') {
+                }
+                if(action.type==='UPDATE-LAST-MESSAGE-BODY') {
+                }
+                if(action.type==='SEND-MESSAGE') {
+                }
+                if(action.type==='DELETE-LAST-MESSAGE') {
+                }
+                */
     }
 }
 /**

@@ -5,8 +5,6 @@ import s from './DialogsSergey.module.css';
 import Dialogs from "./Dialogs";
 
 
-
-
 const DialogsSergey = () => {
     return (
         <div className={s.DialogPage}>

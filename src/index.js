@@ -10,12 +10,12 @@ import App from './App';
 import ReactDOM from 'react-dom';
 
 let rerenderEntireTree = (state) => {
-ReactDOM.render(
-    <BrowserRouter>
-        <StoreContext.Provider value={store}>
-            <App state ={state} dispatch = {store.dispatch.bind(store)} store = {store} />
-        </StoreContext.Provider>
-    </BrowserRouter>, document.getElementById('root'));
+    ReactDOM.render(
+        <BrowserRouter>
+            <StoreContext.Provider value={store}>
+                <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
+            </StoreContext.Provider>
+        </BrowserRouter>, document.getElementById('root'));
 }
 rerenderEntireTree(store.getState);
 

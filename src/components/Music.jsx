@@ -3,14 +3,14 @@ import './Music.css';
 import {NavLink} from "react-router-dom";
 
 const Music = () => {
-return (
-<div className = "Music">
-<NavLink to ="/Music">
-Music (Being Developped)
-</NavLink>
-</div>
+    return (
+        <div className="Music">
+            <NavLink to="/Music">
+                Music (Being Developped)
+            </NavLink>
+        </div>
 
-);
+    );
 }
 
 export default Music;

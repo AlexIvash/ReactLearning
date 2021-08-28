@@ -23,28 +23,24 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching:false//отвечает за получения данных. По умолчанию данные не передаются, до момента пока не перезапишется на true.
+    isFetching: false//отвечает за получения данных. По умолчанию данные не передаются, до момента пока не перезапишется на true.
 };
-   // users: [Нам это не нужно, так как дальше презентационная компонента сама будет добавлять пользователей сюда
-        // { id:1, photoUrl: "https://lh3.googleusercontent.com/proxy/B6W7bNkG7Hv6tkhBz96FXVfC5R94bRP7J0w9PHWzg0VwOQtQKibyBUbsU_FlLw_gaK5RuPGZxtqaI154LVoWQbb7L6NGIXmgimXfPZPhvjAhShQ3znl_ODBPc88xd_FO9nwsXE9obEQniw", followed: false, fullName: "Oleksiy", status: "TestMessage", location: {city: "Kiev", country: "Ukraine"}},
-    //{ id:1, photoUrl: "https://lh3.googleusercontent.com/proxy/B6W7bNkG7Hv6tkhBz96FXVfC5R94bRP7J0w9PHWzg0VwOQtQKibyBUbsU_FlLw_gaK5RuPGZxtqaI154LVoWQbb7L6NGIXmgimXfPZPhvjAhShQ3znl_ODBPc88xd_FO9nwsXE9obEQniw", followed: false, fullName: "Bogdan", status: "TestMessage2", location: {city: "Kiev", country: "Ukraine"}}
-//]};
 
 /**
  * action - тип, который прилетает сюда из Users.jsx
-*/
-const usersReducer = ( state = initialState, action) => {
+ */
+const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
             return {
-                    ...state,
-                    //users: [...state.users], эта запись абсолютно идентична следующей
-                    users: state.users.map(u => {
-                        if (u.id === action.userId) {
-                            return {...u, followed: true}
-                        }
-                        return u;
-                    })
+                ...state,
+                //users: [...state.users], эта запись абсолютно идентична следующей
+                users: state.users.map(u => {
+                    if (u.id === action.userId) {
+                        return {...u, followed: true}
+                    }
+                    return u;
+                })
             }
         case UNFOLLOW:
             return {
@@ -66,7 +62,7 @@ const usersReducer = ( state = initialState, action) => {
          * return {...state, users: action.users}
          */
         case SET_USERS: {
-           // const setUsers = () => { оно пишет что setUsers - это не функция. Но такое вот мне не помогло
+            // const setUsers = () => { оно пишет что setUsers - это не функция. Но такое вот мне не помогло
             //почему users переменные здесь везде unresolved?
 
             //Это значит взять старых юзеров которые уже были в ...state.users и дописать к ним users, который пришли из action.
@@ -78,7 +74,7 @@ const usersReducer = ( state = initialState, action) => {
             //state уже имеет этих users. Через оператор"..." эти users раскрываются и вот к ним добавляется action.users и тд.
             //оператор "..." называется "spread". Он как бы открывает данные какого-либо элемента или массива или возможно JSON'а.
             return {...state, users: action.users}
-            }
+        }
         /**
          * Здесь нам не нужен spread оператор который скопирует currentPage, потому что это значение мы будем перезаписывать
          * когда пользователь выберет свою определенную страничку.
@@ -88,7 +84,8 @@ const usersReducer = ( state = initialState, action) => {
         }
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.count}
-        }case TOGGLE_IS_FETCHING: {
+        }
+        case TOGGLE_IS_FETCHING: {
             return {...state, isFetching: action.isFetching}
         }
 
@@ -121,6 +118,7 @@ export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setUsersTotalCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});//принимает true/false isFetching. Если reducer из action достает
-//свойство isFetching - тогда эти данные мы должны
+//свойство isFetching - тогда лоадер начинает работать, пока все данные не будут достаны и указатель isFetching
+// не будет сменен на false.
 
 export default usersReducer;

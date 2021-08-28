@@ -2,12 +2,12 @@ import React from 'react';
 import './Header.css';
 
 const Header = () => {
-return (
-<header className ='header'>
-<p className = "headerLogo">Message Exchanger V1.0</p>
+    return (
+        <header className='header'>
+            <p className="headerLogo">Message Exchanger V1.0</p>
 
-</header>
-);
+        </header>
+    );
 }
 
 export default Header;

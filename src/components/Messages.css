@@ -1,12 +1,12 @@
-   .Messages {
-     width: 1em;
-     height: 1em;
-     font-size: 2em;
-     text-decoration: none;
-   }
+.Messages {
+    width: 1em;
+    height: 1em;
+    font-size: 2em;
+    text-decoration: none;
+}
 
-   .Messages a.active {
-       background-color: darkseagreen;
-       color: midnightblue;
-       text-decoration: none;
-   }
+.Messages a.active {
+    background-color: darkseagreen;
+    color: midnightblue;
+    text-decoration: none;
+}

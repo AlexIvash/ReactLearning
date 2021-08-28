@@ -1,17 +1,18 @@
-   .News {
-       grid-area: c;
-       height: 1em;
-       font-size: 4em;
-       text-decoration: none;
-       display: grid;
-   }
-   /*
-   a.active {
-       background-color: darkkhaki;
-       color: darkslategrey;
-   }
-   */
-  a.active {
-       color: midnightblue;
-       text-decoration: none;
-   }
+.News {
+    grid-area: c;
+    height: 1em;
+    font-size: 4em;
+    text-decoration: none;
+    display: grid;
+}
+
+/*
+a.active {
+    background-color: darkkhaki;
+    color: darkslategrey;
+}
+*/
+a.active {
+    color: midnightblue;
+    text-decoration: none;
+}

@@ -10,12 +10,15 @@ import usersReducer from "./users-reducer";
  * @type {Reducer<CombinedState<unknown>>}
  */
 let reducers = combineReducers({
-  //  profilePage: profileReducer,
-   // dialogsPage: dialogsReducer, по какой-то причине эти пока не работают, потому я пока их закомментирую
+    profilePage: profileReducer,
+    // dialogsPage: dialogsReducer, по какой-то причине эти пока не работают, потому я пока их закомментирую
     usersPage: usersReducer,
 });
 
-let store = createStore(reducers);
-window.store = store;
+let store = createStore(reducers);//Здесь мы создали store уже не сами, а с помощью redux и потому
+//все данные которые находятся store мы уже не увидим у себя в коде.
+window.store = store; //здесь мы передали store объекту window, чтобы в браузере можно было
+//в любой момент проверить что в store сидит. Написать в консоли браузера например store.getState().profilePage.profile
+// или что-то подобное.
 
 export default store;

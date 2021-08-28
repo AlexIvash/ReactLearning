@@ -10,34 +10,34 @@ import {BrowserRouter, NavLink, Route} from "react-router-dom";
 import Dialogs from "./Dialogs";
 
 const Navbar = () => {
-return (
-<nav className='sidebar'>
-    <NavLink to ="/Content" className= "Profile">
-        Profile
-    </NavLink>
+    return (
+        <nav className='sidebar'>
+            <NavLink to="/Profile" className="Profile">
+                Profile
+            </NavLink>
 
-    <NavLink to ="/Users" className= "Users">
-        Users
-    </NavLink>
+            <NavLink to="/Users" className="Users">
+                Users
+            </NavLink>
 
-    <NavLink to ="/Dialogs" className= "Dialogs">
-        Messages
-    </NavLink>
+            <NavLink to="/Dialogs" className="Dialogs">
+                Messages
+            </NavLink>
 
-    <NavLink to ="/Music" className= "Music">
-        Music
-    </NavLink>
+            <NavLink to="/Music" className="Music">
+                Music
+            </NavLink>
 
-    <NavLink to ="/News" className= "News">
-        News
-    </NavLink>
+            <NavLink to="/News" className="News">
+                News
+            </NavLink>
 
-    <NavLink to ="/Settings" className= "Settings">
-        Settings
-    </NavLink>
-    {/* <DialogsPage /> Я пока не знаю куда именно нужно поместить ссылку на эту страницу чтобы она действительно отображалась как контент на моём сайте, но видимо она должна быть связана с этой но не находиться в блоке навигации слева*/}
-</nav>
-);
+            <NavLink to="/Settings" className="Settings">
+                Settings
+            </NavLink>
+            {/* <DialogsPage /> Я пока не знаю куда именно нужно поместить ссылку на эту страницу чтобы она действительно отображалась как контент на моём сайте, но видимо она должна быть связана с этой но не находиться в блоке навигации слева*/}
+        </nav>
+    );
 }
 
 export default Navbar;

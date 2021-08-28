@@ -3,14 +3,14 @@ import './News.css';
 import {NavLink} from "react-router-dom";
 
 const News = () => {
-return (
-<div className = "News" activeClassName = "Active">
-<NavLink to ="/News">
-News (Being Developped)
-</NavLink>
-</div>
+    return (
+        <div className="News" activeClassName="Active">
+            <NavLink to="/News">
+                News (Being Developped)
+            </NavLink>
+        </div>
 
-);
+    );
 }
 
 export default News;

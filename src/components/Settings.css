@@ -1,14 +1,15 @@
-   .Settings {
-     width: 1em;
-     height: 1em;
-     font-size: 4em;
-       text-decoration: none;
-   }
-   a.active {
-       color: midnightblue;
-       text-decoration: none;
-   }
+.Settings {
+    width: 1em;
+    height: 1em;
+    font-size: 4em;
+    text-decoration: none;
+}
 
-   .updatePhoto{
-       font-size: 20px;
-   }
+a.active {
+    color: midnightblue;
+    text-decoration: none;
+}
+
+.updatePhoto {
+    font-size: 20px;
+}

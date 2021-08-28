@@ -3,8 +3,13 @@ import store from "./State";
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const DELETE_LAST_POST = "DELETE-LAST-POST"
+const SET_USER_PROFILE = "SET_USER_PROFILE"
 
-const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost) => {
+let initialState = {
+    profile: null
+}
+
+const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, state = initialState) => {
     switch (action.type) {
 
         /**
@@ -194,8 +199,22 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost) =>
             //remove last element
             postsData.pop();
             return postsData;
+        case SET_USER_PROFILE: {
+            /**
+             * Возьмем копию state и вернем ее с тем профилем который приходит из action.
+             * Этот store сидит в redux. Такой store из redux мы создали в redux-store.js файле
+             */
+            return {...state, profile: action.profile} //это правильный вариант доступа к state,
+            // нужно переделать остальные action выше под него
+            //state мы взяли из redux-store - там мы нашему reducer'у дали доступ к state.
+        }
+        // return postsData; Так раньше было, но это неправильно - это не вернет, так как это unreacheable code
+        default:
+            return state;
+
     }
-    return postsData;
 }
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+
 
 export default profileReducer;

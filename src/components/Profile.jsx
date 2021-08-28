@@ -1,15 +1,18 @@
 import React from 'react';
 import './Profile.css';
-import {NavLink} from "react-router-dom";
+import ProfileInfo from "./ProfileInfo";
+import Content from "./Content";
 
-const Profile = () => {
-return (
-<div className = "Profile">
-</div>
-);
+const Profile = (props) => {
+    return (
+        <div>
+            <ProfileInfo profile={props.profile}/>
+            <Content/>
+        </div>
+    );
 }
 
 export default Profile;
 
-//Поставил скобку после return и всё же каким-то чудом начало работать
+//Поставил скобки после return и всё же каким-то чудом начало работать
 // сюда нельзя добавлять import './App.css'; иначе будет ошибка

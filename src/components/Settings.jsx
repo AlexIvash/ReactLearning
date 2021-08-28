@@ -2,8 +2,9 @@ import React from 'react';
 import './Settings.css';
 import {NavLink} from "react-router-dom";
 import store from "./../Redux/State";
-const fs = require ('fs');
-const path = require ('path');
+
+const fs = require('fs');
+const path = require('path');
 
 const Settings = (props) => {
     const userPhoto = React.createRef();

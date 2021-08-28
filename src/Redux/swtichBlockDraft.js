@@ -1,11 +1,9 @@
-
-
-
 /**
  * textFromNewPost - это сообщение которое берется из поля ввода на странице content.jsx
  * и мы передаем его сюда из страницы Content (под роутом profile)
  */
-addPost(textFromNewPost, imageFromNewPost) {
+addPost(textFromNewPost, imageFromNewPost)
+{
     console.log("I am addPost");
 
     /**

@@ -1,14 +1,15 @@
 import React from 'react';
 import './Messages.css';
 import {NavLink} from "react-router-dom";
+
 const Messages = () => {
-return (
-<div className = "Messages">
-<NavLink to ="/Messages">
-Messages
-</NavLink>
-</div>
-);
+    return (
+        <div className="Messages">
+            <NavLink to="/Messages">
+                Messages
+            </NavLink>
+        </div>
+    );
 }
 
 export default Messages;

@@ -1,19 +1,21 @@
 .app-wrapper {
-margin: 0 auto;
-  display: grid;
-  display: grid;
-  grid-template-areas:
+    margin: 0 auto;
+    display: grid;
+    display: grid;
+    grid-template-areas:
 "h h"
 "n c";
- grid-template-rows: 40% 60%;
-  grid-template-columns: 40% 60%;
-  grid-gap: 1%;
-  }
-.profileImg {
-width: 30%;
-height: 30%;
+    grid-template-rows: 40% 60%;
+    grid-template-columns: 40% 60%;
+    grid-gap: 1%;
 }
+
+.profileImg {
+    width: 30%;
+    height: 30%;
+}
+
 .AvaDescription img {
-width: 10%;
-height: 10%;
+    width: 10%;
+    height: 10%;
 }

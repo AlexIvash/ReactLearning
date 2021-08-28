@@ -1,8 +1,16 @@
-.userPhoto{
+.usersBlock {
+    grid-area: c;
+    margin-top: 0px;
+}
+
+.userPhoto {
     width: 100px;
     height: 100px;
 }
 
-.selectedPage{
-font-weight: bold;
+.selectedPage {
+    font-weight: bold;
+}
+.pageNumber {
+    height: 100px;
 }
