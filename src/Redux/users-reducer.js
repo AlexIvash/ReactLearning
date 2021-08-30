@@ -97,6 +97,7 @@ const usersReducer = (state = initialState, action) => {
 /**
  * AC - Action Creator. Это все - функции Action Creator, которые и отвечают за логику переключения чего-либо под влиянием action
  * каждый из них принимает что-то, и что-то отдает. На примере первого - принимает userId и userId отдает
+ * Задача этой функции - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
  *
  * export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage: currentPage}); можно записать и так, но не обязательно, потому что currentPage
  * и так будет равен значению переменной фактически

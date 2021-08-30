@@ -2,7 +2,7 @@ import React from 'react';
 import profilePhoto from '../common/profilePhoto.jpeg';
 import styles from "./Users.module.css";
 import {NavLink} from "react-router-dom";
-
+import {usersApi} from "../api/api.js";
 
 /**
  * Если открыть в приложении страницу users, то там будет прилетать users с действительными данными про пользователей взятых из той ссылки. То есть axios, который в конструкторе
@@ -86,12 +86,43 @@ let Users = (props) => {
         </NavLink>
         </div>
         <div>
-            {u.followed
+        {/*    {u.followed
                 ? <button onClick={() => {
                     props.unfollow(u.id)
                 }}>Unfollow</button>
                 : <button onClick={() => {
                     props.follow(u.id)
+                }}>Follow</button>}
+                ^^Это была сырая версия с подпиской в props. Теперь мы будем отправлять здесь запрос на сервер
+                */}
+            {u.followed
+                ? <button onClick={() => {
+                    /**
+                     * Все эти запросы пока что НЕ работают, так как API-KEY здесь неправильный и
+                     * поэтому отсюда уже как бы нельзя делать корректный запрос. Этот АПИ-запрос перенесен в API.js
+                     *
+                     * Поэтому запросы есть для галочки, пусть они и НЕ рабочие.
+                     *
+                     *
+                     * data сюда прилетает, а не response, потому что в api.js выполняет callback then который делает
+                     * return response.data. Потому здесь важно использовать data.resultCode, а не response.data.resultCode
+                     */
+                    usersApi.unfollow(u.id)
+                        .then(data => {
+                            if(data.resultCode === 0) {
+                                props.unfollow(u.id);
+                            }
+                        });
+                }}>Unfollow</button>
+                : <button onClick={() => {
+                    //В POST запросе в библиотеке axios (или вообще в любой библиотеке, я не уверен) - запрос должен идти с конфигурацией и конфигурация в третьем аргументе.
+                    //Второй аргумент должен быть пустым объектом. В Delete или get вторым объектом можно передать withCredentials и другие данные.
+                    usersApi.follow(u.id)
+                        .then(data => {
+                            if(data.resultCode === 0) {
+                                props.follow(u.id);
+                            }
+                        });
                 }}>Follow</button>}
         </div>
                 {/*? и : и } это похоже что механизм реализации разных значений и функций для кнопки, когда проверяют статус кнопки

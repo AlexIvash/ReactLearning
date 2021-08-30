@@ -5,6 +5,7 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from '../Redux/profile-reducer.js';
 import {withRouter} from "react-router-dom";
+import {usersApi} from "../api/api.js";
 
 class ProfileContainer extends React.Component {
 
@@ -15,14 +16,18 @@ class ProfileContainer extends React.Component {
         let userId = this.props.match.params.userId;
 
         /**
-         *Если пользователь открывает Profile без id - тогда он по дефолту будет равен iD=2, что соответствует номеру пользователя под которым он был создан.
+         *Если пользователь открывает Profile без id - тогда он по дефолту будет равен iD=2,
+         * что соответствует номеру пользователя под которым он был создан.
+
+         * data сюда прилетает, а не response, потому что в api.js выполняет callback then который делает
+         * return response.data. Потому здесь важно использовать data.resultCode, а не response.data.resultCode
          */
         if (!userId) {
             userId = 2;
         }
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data);//response.data - data это то что приходит в ответе - одна из строк
+        usersApi.profile(userId)
+            .then(data => {
+                this.props.setUserProfile(data);//response.data - data это то что приходит в ответе - одна из строк
             });
     }
 

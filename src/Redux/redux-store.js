@@ -1,8 +1,8 @@
-import React from "react";
 import {combineReducers, createStore} from "redux";
-import profileReducer from './profile-reducer';
-import dialogsReducer from './dialogs-reducer';
+import profileReducer from "./profile-reducer";
+//import dialogsReducer from "./dialogs-reducer";
 import usersReducer from "./users-reducer";
+import authReducer from "./auth-reducer";
 
 /**
  * profileReducer и подобное - это названия функций в profile-reducer.js файле и тд
@@ -13,6 +13,7 @@ let reducers = combineReducers({
     profilePage: profileReducer,
     // dialogsPage: dialogsReducer, по какой-то причине эти пока не работают, потому я пока их закомментирую
     usersPage: usersReducer,
+    auth: authReducer,
 });
 
 let store = createStore(reducers);//Здесь мы создали store уже не сами, а с помощью redux и потому

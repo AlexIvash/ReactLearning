@@ -214,6 +214,9 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
 
     }
 }
+/**
+ * Задача этой функции - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
+ */
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 
 

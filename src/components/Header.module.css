@@ -15,6 +15,18 @@
     margin-top: 2%;
 }
 
+.loginBlock {
+    float: right;
+    margin-right: 5%;
+    margin-top: 2%;
+}
+
+.loginBlock a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 /*
 .header {
 grid-area: h;

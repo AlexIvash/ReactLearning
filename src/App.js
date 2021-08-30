@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';//Это значит что это лежит в этой же папке
-import Header from './components/Header';
 import Navbar from './components/Navbar';
-import Content from './components/Content';
 import Dialogs from "./components/Dialogs";
 import Music from "./components/Music";
 import News from "./components/News";
@@ -13,6 +11,7 @@ import State from "./Redux/State";
 import {BrowserRouter, Route} from "react-router-dom";
 import store from './Redux/redux-store.js';
 import ProfileContainer from "./components/ProfileContainer";
+import HeaderContainer from "./components/HeaderContainer";
 
 //Все комментарии могут быть только вне функций иначе будут вылазить рандомные ошибки
 
@@ -29,7 +28,7 @@ const App = (props) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
-                <Header/>
+                <HeaderContainer store={store} />
                 <Navbar/>
                 {/**
                  Можно дописывать больше параметров, например /Profile/:userId/:otherParameter

@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 //import preloader from '../common/preloader.gif';
 import Preloader from "../common/preloader";
+import {usersApi} from "../api/api.js";
 
 //import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
 
@@ -46,18 +47,22 @@ class UsersContainer extends React.Component {
      страницу (значение pageNumber)и еще раз делает запрос на сервер но уже с номером другой страницы. pageSize имеет смысл брать из props, потому что он не меняется. Так работает метод onPageChanged.
 
      Возможено, для componentDidMount следовало бы по умолчанию показа
+
+     UPDATE! Запросы перенесены на страницу api/api.js и вызываются через импортированный getUsers
+     Раньше сюда приходил response с датой, теперь просто data, потому что data возвращается в api.js и теперь мы обращаемся напрямую не response.data, а просто data.
+     И получаем в then не response, а data.
      */
     componentDidMount() {
         // const axios = require('axios');//эта хрень не обязательна, но пусть будет.
         this.props.toggleIsFetching(true);//Во время инициализации компоненты мы говорим, что запрос пошел - данные начинают грузиться
         //и мы меняем это свойство на true, поэтому появляется loader ровно до момента, пока компонента не будет смонтирована до самого конца. Нужно будет подобную логику написать
         //и для постов на Content странице
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+      usersApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
                 //чтобы прекратить работу preloader'а
-                this.props.setUsers(response.data.items);
-                this.props.setUsersTotalCount(response.data.totalCount);//totalCount и остальное - свойства, берущиеся из get запроса.
+                this.props.setUsers(data.items);
+                this.props.setUsersTotalCount(data.totalCount);//totalCount и остальное - свойства, берущиеся из get запроса.
             });
 
         //response.data.items - это и есть массив пользователей который приходит в ответе
@@ -77,16 +82,18 @@ class UsersContainer extends React.Component {
 
      pageNumber здесь так же используется в API запросе в отличии от того метода в componentDidMount, который использует значение из props. Значение в props для componentDidMount -
      старая, открытая уже страница а не та по которой кликнули, та по которой кликнули - pageNumber.
+
+     ЗАПРОС БЫЛ ПЕРЕНЕСЕН в API.js файл
      */
     onPageChanged = (pageNumber) => {
         this.props.toggleIsFetching(true);//Когда происходит изменения страницы - то есть выполняется новый запрос -
         // мы говорим, что запрос пошел - данные начинают грузиться
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
+        usersApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
                 //чтобы прекратить работу preloader'а
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(data.items);
             });
     }
 

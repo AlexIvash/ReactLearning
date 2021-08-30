@@ -21,9 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HeaderContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderContainer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,6 +114,8 @@
       <workItem from="1630130651194" duration="12571000" />
       <workItem from="1630148604616" duration="557000" />
       <workItem from="1630299255689" duration="3258000" />
+      <workItem from="1630327573474" duration="7211000" />
+      <workItem from="1630405827030" duration="6147000" />
     </task>
     <servers />
   </component>
