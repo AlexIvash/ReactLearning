@@ -31,10 +31,11 @@ const App = (props) => {
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
-                {/*<Route path = '/Profile' component = {ProfileContainer} />
-      <Route path = '/Profile' render = { () => <ProfileContainer store={store} /> } />*/}
-                {/*<Route path = '/Profile' render = { () => <Content postsData={State.postsData} store={store} /> } />*/}
-                <Route path='/Profile' render={() => <ProfileContainer postsData={State.postsData} store={store}/>}/>
+                {/**
+                 Можно дописывать больше параметров, например /Profile/:userId/:otherParameter
+                 :userId? - значит что это НЕ обязательный параметр
+                 */}
+                <Route path='/Profile/:userId?' render={() => <ProfileContainer postsData={State.postsData} store={store}/>}/>
                 <Route exact path='/Dialogs' render={() => <Dialogs messagesData={State.messagesData}/>}/>
                 <Route path='/Users' render={() => <UsersContainer store={store}/>}/>
 

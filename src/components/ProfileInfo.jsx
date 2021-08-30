@@ -3,7 +3,10 @@ import styles from "./ProfileInfo.module.css";
 import Preloader from "../common/preloader";
 
 const ProfileInfo = (props) => {
-//Ниже более сокращенный вариант    if(props.profile == null || props.profile == undefined)
+    /**
+     * Компонента вначале показывает Preloader, если данных нету. Если данные есть- тогда отображает профиль.
+     * Ниже более сокращенный вариант    if(props.profile == null || props.profile == undefined)
+     */
     if (!props.profile) {
         return <Preloader/>
     }
