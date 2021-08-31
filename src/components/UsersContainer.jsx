@@ -16,7 +16,8 @@ import {
     setUsers,
     setCurrentPage,
     setUsersTotalCount,
-    toggleIsFetching
+    toggleIsFetching,
+    toggleFollowingProgress
 } from '../Redux/users-reducer.js';
 import axios from "axios";
 //import preloader from '../common/preloader.gif';
@@ -112,6 +113,8 @@ class UsersContainer extends React.Component {
                    users={this.props.users}
                    follow={this.props.follow}
                    unfollow={this.props.unfollow}
+                   toggleFollowingProgress={this.props.toggleFollowingProgress}
+                   followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -142,7 +145,8 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching//isFetching - идет ли процесс получения данных. Если false - нет, если идут - тогда true
+        isFetching: state.usersPage.isFetching,//isFetching - идет ли процесс получения данных. Если false - нет, если идут - тогда true
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -212,11 +216,13 @@ let mapStateToProps = (state) => {
     setTotalCount: setUsersTotalCountAC,
     toggleIsFetching: toggleIsFetchingAC
 }) (UsersContainer);
- *
+
  * Зачем такие сокращения кода? Для того, чтобы поменьше писать кода которые не связан с бизнес-логикой, но связан с обеспечением нормального функционирования наших компонент и связи со State.
- *
+
  * Вот еще более интересное сокращение кода - теперь он будет НЕ через две запятых, а просто без них. Он полностью равен записанному выше коду. Эти ссылки видут на функции в users-reducer.js
- * файле. То есть здесь как бы не key:pair, а key и pair - одно и то же значение и это упрощенная версия получается
+ * файле. То есть здесь как бы не key:pair, а key и pair - одно и то же значение и это упрощенная версия получается.
+
+ * Connect здесь сам создаст callback, который задиспатчит ActionCreator.
  */
 export default connect(mapStateToProps, {
     follow,
@@ -224,7 +230,8 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setUsersTotalCount,
-    toggleIsFetching
+    toggleIsFetching,
+    toggleFollowingProgress
 })(UsersContainer);
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.

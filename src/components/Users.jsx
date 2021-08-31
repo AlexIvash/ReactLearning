@@ -96,7 +96,9 @@ let Users = (props) => {
                 ^^Это была сырая версия с подпиской в props. Теперь мы будем отправлять здесь запрос на сервер
                 */}
             {u.followed
-                ? <button onClick={() => {
+                //Если props.followingInProgress будет true - тогда кнопка будет задизейблена.
+                ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                    props.toggleFollowingProgress(true, u.id);
                     /**
                      * Все эти запросы пока что НЕ работают, так как API-KEY здесь неправильный и
                      * поэтому отсюда уже как бы нельзя делать корректный запрос. Этот АПИ-запрос перенесен в API.js
@@ -112,16 +114,21 @@ let Users = (props) => {
                             if(data.resultCode === 0) {
                                 props.unfollow(u.id);
                             }
+                            //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
+                        props.toggleFollowingProgress(false, u.id);
                         });
                 }}>Unfollow</button>
-                : <button onClick={() => {
+                : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                     //В POST запросе в библиотеке axios (или вообще в любой библиотеке, я не уверен) - запрос должен идти с конфигурацией и конфигурация в третьем аргументе.
                     //Второй аргумент должен быть пустым объектом. В Delete или get вторым объектом можно передать withCredentials и другие данные.
+                    props.toggleFollowingProgress(true, u.id);
                     usersApi.follow(u.id)
                         .then(data => {
                             if(data.resultCode === 0) {
                                 props.follow(u.id);
                             }
+                            //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
+                            props.toggleFollowingProgress(false, u.id);
                         });
                 }}>Follow</button>}
         </div>

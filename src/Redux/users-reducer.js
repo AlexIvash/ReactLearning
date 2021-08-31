@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 //значит, включить если выключено и выключить если включено - то есть переключатель
 
 /**
@@ -23,7 +24,9 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false//отвечает за получения данных. По умолчанию данные не передаются, до момента пока не перезапишется на true.
+    isFetching: false,//отвечает за получения данных. По умолчанию данные не передаются, до момента пока не перезапишется на true.
+    followingInProgress: []//это массив в который мы будем помещать id того пользователя, которого мы follow/unfollow.
+    //если пользователь follow - прокидываем сюда id пользователя, если нет - забираем. Реализуется на странице users через .some - добавление u.id, а здесь через .filter - удаление u.id
 };
 
 /**
@@ -88,6 +91,16 @@ const usersReducer = (state = initialState, action) => {
         case TOGGLE_IS_FETCHING: {
             return {...state, isFetching: action.isFetching}
         }
+        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]//После знака вопроса в тернарном выражении всегда условие true!
+                    : state.followingInProgress.filter(id => id != action.userId)//После двоеточия в тернарном выражении всегда условие false!
+            }
+            //копируем массив пользователей для которых делается follow/unfollow и потом удаляем запись после выполнения этого действия.
+            //Это реализация функции блокирования кнопки, когда происходит follow/unfollow, чтобы не засырать сервер большим количеством запросов.
+        }
 
         default:
             return state;
@@ -121,5 +134,7 @@ export const setUsersTotalCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});//принимает true/false isFetching. Если reducer из action достает
 //свойство isFetching - тогда лоадер начинает работать, пока все данные не будут достаны и указатель isFetching
 // не будет сменен на false.
+export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId});//isFetching - параметр тогла для true/false. userId - чтобы было понятно
+//кто есть в массиве пользователей которых делают follow/unfollow и кого там нет.
 
 export default usersReducer;
