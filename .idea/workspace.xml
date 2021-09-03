@@ -21,9 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Redux/users-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/users-reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/auth-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/auth-reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/profile-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/profile-reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HeaderContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -114,7 +115,12 @@
       <workItem from="1630148604616" duration="557000" />
       <workItem from="1630299255689" duration="3258000" />
       <workItem from="1630327573474" duration="7211000" />
-      <workItem from="1630405827030" duration="9162000" />
+      <workItem from="1630405827030" duration="10091000" />
+      <workItem from="1630510810280" duration="259000" />
+      <workItem from="1630560849999" duration="442000" />
+      <workItem from="1630606572697" duration="3174000" />
+      <workItem from="1630661318728" duration="2312000" />
+      <workItem from="1630676160462" duration="1545000" />
     </task>
     <servers />
   </component>

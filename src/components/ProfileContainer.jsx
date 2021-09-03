@@ -3,7 +3,9 @@ import './Profile.css';
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from '../Redux/profile-reducer.js';
+//import {setUserProfile} from '../Redux/profile-reducer.js';
+//больше не нужно, так как мы не set'аем отсюда userProfile, а сетаем его отдельно через thunk функцию в profile-reducer
+import {getUserProfile} from '../Redux/profile-reducer.js';
 import {withRouter} from "react-router-dom";
 import {usersApi} from "../api/api.js";
 
@@ -25,10 +27,13 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = 2;
         }
-        usersApi.profile(userId)
+       /** usersApi.profile(userId)
             .then(data => {
                 this.props.setUserProfile(data);//response.data - data это то что приходит в ответе - одна из строк
             });
+        перенесено в thunk функцию в profile-reducer
+        */
+       this.props.getUserProfile(userId);
     }
 
     render() {
@@ -57,9 +62,13 @@ let WithUrlDataContainerComponent = withRouter(ProfileContainer);
  * Теперь работает по другому - сначала withRouter прокидывает данные из url ProfileContainer,
  * потом этот WithUrlDataContainerComponent отдается уже connect и туда прокидываются данные из props. Получается контейнер вокруг контейнера.
  * Так вот это работает.
- */
+
 
 export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent);
-
+{setUserProfile} больше не нужен, так как мы больше не сетаем это из UI
+ теперь компонента сама получает эти данные через thunk функцию. Ее вызов выше
+ "this.props.getUserProfile(userId);"
+ */
+export default connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent);
 //container создаст как бы еще одну контейнерную компоненту вокруг этой контейнерной компоненты.
 //Мы отдаем эту функцию Connect, Connect эту фунцию вызовет

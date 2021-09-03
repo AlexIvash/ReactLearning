@@ -98,8 +98,10 @@ let Users = (props) => {
             {u.followed
                 //Если props.followingInProgress будет true - тогда кнопка будет задизейблена.
                 ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                    props.toggleFollowingProgress(true, u.id);
+                    props.unfollow(u.id);//это вызывает теперь thunk функцию в users-reducer
                     /**
+                       props.toggleFollowingProgress(true, u.id);
+
                      * Все эти запросы пока что НЕ работают, так как API-KEY здесь неправильный и
                      * поэтому отсюда уже как бы нельзя делать корректный запрос. Этот АПИ-запрос перенесен в API.js
                      *
@@ -108,7 +110,9 @@ let Users = (props) => {
                      *
                      * data сюда прилетает, а не response, потому что в api.js выполняет callback then который делает
                      * return response.data. Потому здесь важно использовать data.resultCode, а не response.data.resultCode
-                     */
+                     *
+                     * UPDATE: запрос перенесен в users-reducer в thunk функцию
+
                     usersApi.unfollow(u.id)
                         .then(data => {
                             if(data.resultCode === 0) {
@@ -116,12 +120,14 @@ let Users = (props) => {
                             }
                             //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
                         props.toggleFollowingProgress(false, u.id);
-                        });
+                        });*/
                 }}>Unfollow</button>
                 : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                     //В POST запросе в библиотеке axios (или вообще в любой библиотеке, я не уверен) - запрос должен идти с конфигурацией и конфигурация в третьем аргументе.
                     //Второй аргумент должен быть пустым объектом. В Delete или get вторым объектом можно передать withCredentials и другие данные.
-                    props.toggleFollowingProgress(true, u.id);
+                  /**
+                   Это перенесено в users-reducer в thunk функцию
+                   * props.toggleFollowingProgress(true, u.id);
                     usersApi.follow(u.id)
                         .then(data => {
                             if(data.resultCode === 0) {
@@ -129,7 +135,8 @@ let Users = (props) => {
                             }
                             //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
                             props.toggleFollowingProgress(false, u.id);
-                        });
+                        });*/
+                  props.follow(u.id);//это вызывает теперь thunk функцию в users-reducer
                 }}>Follow</button>}
         </div>
                 {/*? и : и } это похоже что механизм реализации разных значений и функций для кнопки, когда проверяют статус кнопки

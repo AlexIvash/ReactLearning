@@ -1,3 +1,5 @@
+import {usersApi} from "../api/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -126,8 +128,8 @@ const usersReducer = (state = initialState, action) => {
  *
  * UPDATE: ^^^Эти функции переименованы в связи с рефакторингом функции mapDispatchToProps для Connect в файле UsersContainer.jsx
  */
-export const follow = (userId) => ({type: FOLLOW, userId});
-export const unfollow = (userId) => ({type: UNFOLLOW, userId});
+export const followSuccess = (userId) => ({type: FOLLOW, userId});
+export const unfollowSuccess = (userId) => ({type: UNFOLLOW, userId});
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setUsersTotalCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
@@ -136,5 +138,75 @@ export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFe
 // не будет сменен на false.
 export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId});//isFetching - параметр тогла для true/false. userId - чтобы было понятно
 //кто есть в массиве пользователей которых делают follow/unfollow и кого там нет.
+
+//export const getUsersThunkCreator = (currentPage, pageSize) => {
+export const getUsers = (currentPage, pageSize) => {
+// const axios = require('axios');//эта хрень не обязательна, но пусть будет.
+    //this.props.toggleIsFetching(true);Во время инициализации компоненты мы говорим, что запрос пошел - данные начинают грузиться
+    //и мы меняем это свойство на true, поэтому появляется loader ровно до момента, пока компонента не будет смонтирована до самого конца. Нужно будет подобную логику написать
+    //и для постов на Content странице
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        usersApi.getUsers(currentPage, pageSize)
+            .then(data => {
+                // this.props.toggleIsFetching(false);После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
+                dispatch(toggleIsFetching(false));
+                //чтобы прекратить работу preloader'а
+                // this.props.setUsers(data.items);
+                dispatch(setUsers(data.items));
+                //this.props.setUsersTotalCount(data.totalCount);//totalCount и остальное - свойства, берущиеся из get запроса.
+                dispatch(setUsersTotalCount(data.totalCount));
+            });
+    }
+
+    //response.data.items - это и есть массив пользователей который приходит в ответе
+    //причем получается что здесь мы props задаем и здесь же в конструкторе эти props принимаем
+    //setUsers - через него мы общаемся со State.
+
+    //этот метод делает setUsers в файле users-reducer.js и там есть return ...state, через который мы и получаем пользователей назад. Вероятно,
+    // эти пользователи через props прилетают в этот метод.
+}
+
+/**
+ * Все данные, которые нужны этой функции внутри thunk - диспатчится в thunkCreator и с помощь замыкания мы эти данные получаем
+ * вот как здесь:
+ */
+export const follow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingProgress(true, userId));
+        usersApi.follow(userId)
+            .then(data => {
+                if(data.resultCode === 0) {
+                    dispatch(follow(userId));
+                }
+                //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
+                dispatch(toggleFollowingProgress(false, userId));
+            });
+    }
+}
+
+export const unfollow = (userId) => {
+    return (dispatch) => {
+        /**
+         * Все эти запросы пока что НЕ работают, так как API-KEY здесь неправильный и
+         * поэтому отсюда уже как бы нельзя делать корректный запрос. Этот АПИ-запрос перенесен в API.js
+         *
+         * Поэтому запросы есть для галочки, пусть они и НЕ рабочие.
+         *
+         *
+         * data сюда прилетает, а не response, потому что в api.js выполняет callback then который делает
+         * return response.data. Потому здесь важно использовать data.resultCode, а не response.data.resultCode
+         */
+        dispatch(toggleFollowingProgress(true, userId));
+        usersApi.unfollow(userId)
+            .then(data => {
+                if(data.resultCode === 0) {
+                    dispatch(unfollow(userId));
+                }
+                //после окончания синхронного запроса диспатчим false, чтобы сделать кнопку снова активной.
+                dispatch(toggleFollowingProgress(false, userId));
+            });
+    }
+}
 
 export default usersReducer;

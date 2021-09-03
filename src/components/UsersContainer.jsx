@@ -17,7 +17,9 @@ import {
     setCurrentPage,
     setUsersTotalCount,
     toggleIsFetching,
-    toggleFollowingProgress
+    toggleFollowingProgress,
+    //getUsersThunkCreator сократили название в users-reducer до getUsers
+    getUsers
 } from '../Redux/users-reducer.js';
 import axios from "axios";
 //import preloader from '../common/preloader.gif';
@@ -49,29 +51,12 @@ class UsersContainer extends React.Component {
 
      Возможено, для componentDidMount следовало бы по умолчанию показа
 
-     UPDATE! Запросы перенесены на страницу api/api.js и вызываются через импортированный getUsers
+     UPDATE! Запросы перенесены на страницу api/api.js и в thunk функцию в users-reducer и вызываются через импортированный getUsers
      Раньше сюда приходил response с датой, теперь просто data, потому что data возвращается в api.js и теперь мы обращаемся напрямую не response.data, а просто data.
      И получаем в then не response, а data.
      */
     componentDidMount() {
-        // const axios = require('axios');//эта хрень не обязательна, но пусть будет.
-        this.props.toggleIsFetching(true);//Во время инициализации компоненты мы говорим, что запрос пошел - данные начинают грузиться
-        //и мы меняем это свойство на true, поэтому появляется loader ровно до момента, пока компонента не будет смонтирована до самого конца. Нужно будет подобную логику написать
-        //и для постов на Content странице
-      usersApi.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
-                //чтобы прекратить работу preloader'а
-                this.props.setUsers(data.items);
-                this.props.setUsersTotalCount(data.totalCount);//totalCount и остальное - свойства, берущиеся из get запроса.
-            });
-
-        //response.data.items - это и есть массив пользователей который приходит в ответе
-        //причем получается что здесь мы props задаем и здесь же в конструкторе эти props принимаем
-        //setUsers - через него мы общаемся со State.
-
-        //этот метод делает setUsers в файле users-reducer.js и там есть return ...state, через который мы и получаем пользователей назад. Вероятно,
-        // эти пользователи через props прилетают в этот метод.
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     /**
@@ -84,18 +69,11 @@ class UsersContainer extends React.Component {
      pageNumber здесь так же используется в API запросе в отличии от того метода в componentDidMount, который использует значение из props. Значение в props для componentDidMount -
      старая, открытая уже страница а не та по которой кликнули, та по которой кликнули - pageNumber.
 
-     ЗАПРОС БЫЛ ПЕРЕНЕСЕН в API.js файл
+     ЗАПРОС БЫЛ ПЕРЕНЕСЕН в API.js файл и в thunk функцию в users-reducer
      */
     onPageChanged = (pageNumber) => {
-        this.props.toggleIsFetching(true);//Когда происходит изменения страницы - то есть выполняется новый запрос -
-        // мы говорим, что запрос пошел - данные начинают грузиться
-        this.props.setCurrentPage(pageNumber);
-        usersApi.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false);//После того как ответ на запрос с сервера пришел - мы устанавливаем значение false,
-                //чтобы прекратить работу preloader'а
-                this.props.setUsers(data.items);
-            });
+        this.props.getUsers(pageNumber, this.props.pageSize);
+
     }
 
     render() {
@@ -227,11 +205,13 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     follow,
     unfollow,
-    setUsers,
+    //setUsers, перенесено в  getUsersThunkCreator и больше не нужно
     setCurrentPage,
-    setUsersTotalCount,
-    toggleIsFetching,
-    toggleFollowingProgress
+    //setUsersTotalCount, перенесено в  getUsersThunkCreator и больше не нужно
+    //toggleIsFetching, перенесено в  getUsersThunkCreator и больше не нужно
+   // toggleFollowingProgress, это происходит как часть бизнес-процесса внутри thunk
+    //getUsers: getUsersThunkCreator сократили потому что в users-reducer тоже сократили название функции
+    getUsers
 })(UsersContainer);
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.

@@ -1,4 +1,5 @@
 import store from "./State";
+import {usersApi} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
@@ -218,6 +219,19 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
  * Задача этой функции - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
  */
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+/**
+ * thunk функция, которая принимает метод dispatch и может dispatch'ить функции,
+ * которые при повторном запуске(замыкании) превратятся в объекты. До, перед, или после синхронной операции может выполняться thunk
+ * (как запрограммируем - так и будет выполняться).
+
+ *.then(data => а не .then(response => - правильный вариант, потому что так возвращается в usersApi
+ */
+export const getUserProfile = (userId) => (dispatch) => {
+    usersApi.profile(userId)
+        .then(data => {
+            dispatch(setUserProfile(data));//response.data - data это то что приходит в ответе - одна из строк
+        });
+}
 
 
 export default profileReducer;
