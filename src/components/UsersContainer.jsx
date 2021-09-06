@@ -25,6 +25,8 @@ import axios from "axios";
 //import preloader from '../common/preloader.gif';
 import Preloader from "../common/preloader";
 import {usersApi} from "../api/api.js";
+import {withAuthRedirect} from "../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 //import * as axios from "axios"; если используем такой импорт, то get возле axios подчеркивается в методе componentDidMount и приходится использоваться const axios = required 'axios'
 
@@ -201,8 +203,8 @@ let mapStateToProps = (state) => {
  * файле. То есть здесь как бы не key:pair, а key и pair - одно и то же значение и это упрощенная версия получается.
 
  * Connect здесь сам создаст callback, который задиспатчит ActionCreator.
- */
-export default connect(mapStateToProps, {
+
+export default withAuthRedirect(connect(mapStateToProps, {
     follow,
     unfollow,
     //setUsers, перенесено в  getUsersThunkCreator и больше не нужно
@@ -212,7 +214,14 @@ export default connect(mapStateToProps, {
    // toggleFollowingProgress, это происходит как часть бизнес-процесса внутри thunk
     //getUsers: getUsersThunkCreator сократили потому что в users-reducer тоже сократили название функции
     getUsers
-})(UsersContainer);
+})(UsersContainer)); */
+
+export default compose (withAuthRedirect, connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setCurrentPage,
+    getUsers}
+)) (UsersContainer);
 {/**
  Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.
  export default UsersContainer; думаю что здесь это лишнее. В видео нашел момент в 49 части где здесь нету этого экспорта.

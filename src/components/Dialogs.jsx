@@ -1,9 +1,18 @@
 import React from 'react';
 import styles from './Dialogs.module.css';
+import {Redirect} from "react-router-dom";
+import Login from "./Login";
 
 const Dialogs = (props) => {
     const messageBody = React.createRef();
 
+    /**
+     * Если пользователь не авторизован - его будет редиректить на страницу Login. Чтобы убрать функцию -
+     * поставить true в DialogsContainer.
+     * Работает по принципу того что нужно вернуть React разметку и если user не залогинен - возвращает страницу логина
+     * вместо текущей страницы. Так как isAuth:false/isAuth:state.auth.isAuth пока нет в mapStateToProps в dialogs Container - я это заблокировал временнj
+
+    if(props.isAuth == false) return <Redirect to={Login} />*/
     return (
         <div>
             <div className={styles.DialogPageNewMessage}>

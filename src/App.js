@@ -12,6 +12,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import store from './Redux/redux-store.js';
 import ProfileContainer from "./components/ProfileContainer";
 import HeaderContainer from "./components/HeaderContainer";
+import Login from "./components/Login";
 
 //Все комментарии могут быть только вне функций иначе будут вылазить рандомные ошибки
 
@@ -33,10 +34,13 @@ const App = (props) => {
                 {/**
                  Можно дописывать больше параметров, например /Profile/:userId/:otherParameter
                  :userId? - значит что это НЕ обязательный параметр
+
+                 по хорошему данные из state не передавать аж здесь, а передавать через connect и store
                  */}
                 <Route path='/Profile/:userId?' render={() => <ProfileContainer postsData={State.postsData} store={store}/>}/>
                 <Route exact path='/Dialogs' render={() => <Dialogs messagesData={State.messagesData}/>}/>
                 <Route path='/Users' render={() => <UsersContainer store={store}/>}/>
+                <Route path='/Login' render={() => <Login />}/>
 
                 {/*
    И так,  я продвинулся наконец.

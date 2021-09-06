@@ -73,5 +73,27 @@ const Messages = (props) => {
         </div>
     );
 }
+
+/*
+let mapStateToProps = (state) => {
+    return{
+    dialogsPage: state.dialogsPage
+    }
+
+    let mapDispatchToProps = (dispatch) => {
+    return {
+sendMessage: () => {
+dispatch(sendMessageCreator());
+},
+updateNewMessageBody: (body) => {
+dispatch(updateNewMessageBodyCreator(body));
+}
+    }
+}
+
+let AuthRedirectComponent = withAuthRedirect(Dialogs);
+
+const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (Dialogs);- я тут начал рефакторить, но так и не закончил
+*/
 export default DialogsContainer;
 
