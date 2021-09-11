@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from "./ProfileInfo.module.css";
+import ProfileStatus from "./ProfileStatus";
 import Preloader from "../common/preloader";
 
 const ProfileInfo = (props) => {
@@ -19,6 +20,8 @@ const ProfileInfo = (props) => {
             </div>
             <div className={styles.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
+                <br></br>
+                <ProfileStatus status={"default test status"} />
             </div>
         </div>
     );

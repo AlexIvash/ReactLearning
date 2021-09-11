@@ -20,9 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileStatus.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +53,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -124,7 +124,7 @@
       <workItem from="1630958072170" duration="218000" />
       <workItem from="1630962976529" duration="1242000" />
       <workItem from="1630999547873" duration="3007000" />
-      <workItem from="1631217469262" duration="1355000" />
+      <workItem from="1631217469262" duration="6791000" />
     </task>
     <servers />
   </component>
