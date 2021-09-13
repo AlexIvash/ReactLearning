@@ -1,13 +1,15 @@
 import store from "./State";
-import {usersApi} from "../api/api";
+import {profileApi, usersApi} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const DELETE_LAST_POST = "DELETE-LAST-POST"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
+const SET_STATUS = "SET_STATUS"
 
 let initialState = {
-    profile: null
+    profile: null,
+    status: ''
 }
 
 const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, state = initialState) => {
@@ -209,6 +211,9 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
             // нужно переделать остальные action выше под него
             //state мы взяли из redux-store - там мы нашему reducer'у дали доступ к state.
         }
+        case SET_STATUS: {
+            return {...state, status: action.status}
+        }
         // return postsData; Так раньше было, но это неправильно - это не вернет, так как это unreacheable code
         default:
             return state;
@@ -216,11 +221,13 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
     }
 }
 /**
- * Задача этой функции - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
+ * Задача этих функций - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
  */
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+
+export const setStatus = (status) => ({type: SET_STATUS, status})
 /**
- * thunk функция, которая принимает метод dispatch и может dispatch'ить функции,
+ * thunk функции, которая принимает метод dispatch и может dispatch'ить функции,
  * которые при повторном запуске(замыкании) превратятся в объекты. До, перед, или после синхронной операции может выполняться thunk
  * (как запрограммируем - так и будет выполняться).
 
@@ -230,6 +237,31 @@ export const getUserProfile = (userId) => (dispatch) => {
     usersApi.profile(userId)
         .then(data => {
             dispatch(setUserProfile(data));//response.data - data это то что приходит в ответе - одна из строк
+            //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
+            //полный путь доступа к данным изначально response.data.data(да, там две data)
+        });
+}
+
+export const getStatus = (userId) => (dispatch) => {
+    profileApi.getStatus(userId)
+        .then(data => {
+            dispatch(setStatus(data));//response.data - data это то что приходит в ответе - одна из строк.
+            //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
+            //полный путь доступа к данным изначально response.data.data(да, там две data)
+        });
+}
+
+export const updateStatus = (status) => (dispatch) => {
+    profileApi.updateStatus(status)
+        .then(data => {
+            //в сервере на back end есть ответ с ошибкой(resultCode === 1), но мы пока не обрабатываем этот код.
+            //Пока мы только даем действия, если ошибки нету.
+            if (data.resultCode === 0) {
+                dispatch(setStatus(status));//response.data - data это то что приходит в ответе - одна из строк.
+                //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
+                //полный путь доступа к данным изначально response.data.data(да, там две data)
+                //Возможно здесь нужно data.status?
+            }
         });
 }
 

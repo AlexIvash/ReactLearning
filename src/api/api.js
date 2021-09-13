@@ -73,6 +73,9 @@ export const profile = (userId) => {
             return response.data;
         });
 }
+
+ Нужно сказать что у него здесь нет return response.data - но у нас просто сделано более продуктивно и красиво
+ У него в видео он не делал пока. Но у нас лучше и поэтому лучше не переделывать.
  */
 
 export const usersApi = {
@@ -105,9 +108,42 @@ export const usersApi = {
     },
 
     profile (userId) {
+        console.warn("Obsolete method. Please, use profileApi")
+       /** return instance.get('profile/' + userId)
+            .then(response => {
+                return response.data;
+            });
+        ^^^ Мы больше не используем этот метод, а используем profileApi, потому если кто-то будет
+        вызывать этот метод - мы его будем переводить на вызов profileApi,но дальнейший код
+        где мы еще будем брать profile - мы будем вызывать profileApi напрямую, и тогда не будет console.warn
+        */
+        return profileApi.getProfile(userId);
+    }
+}
+
+export const profileApi = {
+    getProfile (userId) {
         return instance.get('profile/' + userId)
             .then(response => {
                 return response.data;
             });
-    }
-}
+    },
+    getStatus (userId) {
+        return instance.get('profile/status/' + userId)
+            .then(response => {
+                return response.data;
+            });
+    },
+    updateStatus (status) {
+        /**
+         * Мы не имеем права обновить чужой статус, потому тут будет только один userId - свой userId.
+         * userId будет зашит в cookie?
+         * {status:status} - передавать необязательно так как значение равно имени переменной(или как-то так)
+         * потому просто передадим {status}
+         *
+         *
+         * ЗАБАВНО, НО - если здесь был profile/status/ то не подгружалась аватарка в профайле. Как это связано - я вообще хер знает 0_о
+         */
+ return instance.put('profile/status', {status: status})
+ }
+ }
