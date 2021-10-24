@@ -1,12 +1,25 @@
 import store from "./State";
 
 const UPDATE_LAST_MESSAGE_BODY = "UPDATE-LAST-MESSAGE-BODY"
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
 const DELETE_LAST_MESSAGE = "DELETE-LAST-MESSAGE"
 
+let initialState = {
+    dialogs: [
+        {id: 1, name: 'Alex'},
+        {id: 2, name: 'Test'},
+    ],
+    messages: [
+        {id: 1, message: 'Test'},
+        {id: 1, message: 'newMessageTest'}
+    ]
+};
+
 /**
  * action.body которые прилетают сюда - отправлены с dialogs.jsx
- */
+
+
 const dialogsReducer = (messagesData, action) => {
     switch (action.type) {
         case SEND_MESSAGE:
@@ -20,10 +33,12 @@ const dialogsReducer = (messagesData, action) => {
             //  store._callSubscriber(store.getState());
             return messagesData;
         case UPDATE_LAST_MESSAGE_BODY:
+ */
             /**
              * везде, где было this._state все заменяется на state. state - это this._state, который передается к нам со страницы State.js
              * Все что this. - теперь state.
              */
+/**
             store.getState().newMessageBody = action.body;
             //remove last message
             messagesData.pop();
@@ -40,6 +55,7 @@ const dialogsReducer = (messagesData, action) => {
              * Стало так:
              * state._callSubscriber(state);
              */
+/**
             //  store._callSubscriber(state);
             return messagesData;
         case DELETE_LAST_MESSAGE :
@@ -50,5 +66,25 @@ const dialogsReducer = (messagesData, action) => {
     }
     return messagesData;
 }
+ */
+const dialogsReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case SEND_MESSAGE:
+            let body = action.newMessageBody;
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 6, message: body}]
+            }
+        case UPDATE_NEW_MESSAGE_BODY:
+            return {
+                ...state,
+                newMessageBody: action.body,
+            };
+    }
+}
+
+export const sendMessageCreator = (newMessageBody) => ({type: SEND_MESSAGE, newMessageBody});
+export const updateNewMessageBodyCreator = (body) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body});
 
 export default dialogsReducer;

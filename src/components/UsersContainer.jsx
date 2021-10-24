@@ -23,7 +23,7 @@ import {
 } from '../Redux/users-reducer.js';
 import axios from "axios";
 //import preloader from '../common/preloader.gif';
-import Preloader from "../common/preloader";
+import Preloader from "../common/Preloader/preloader";
 import {usersApi} from "../api/api.js";
 import {withAuthRedirect} from "../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -105,7 +105,7 @@ class UsersContainer extends React.Component {
  */
 
 /**
- * Эта функция принимает весь глобальный state целиком и передает сюда в props для компоненты Users.
+ * Эта функция принимает весь глобальный state целиком и передает данные из state в props для компоненты Users.
  * В Users это передается через export default connect ... . Потому значение props для users будут пользователи (users) из state
  * и все другие данные, указанные здесь.
  * Все эти параметры берутся из
@@ -223,10 +223,35 @@ export default compose (withAuthRedirect, connect(mapStateToProps, {
     getUsers}
 )) (UsersContainer);
 {/**
- Сюда в connect можно закидывать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.
- export default UsersContainer; думаю что здесь это лишнее. В видео нашел момент в 49 части где здесь нету этого экспорта.
- Мы передаем эту функцию в Connect, Connect ее вызовет
+ Compose - это функция, которая позволяет получить результат одной функции(самой правой) и затем обработать его
+ с помощью функции расположенной слева от правой функции.
+ Compose служит здесь так:
+ сначала выполняется функция connect, которая подсоединяет api запросы и затем при выполнении этих запросов
+ выполняется функция withAuthRedirect. Выполнение идет справа налево. Но стоит отметить так - всегда вызывается самая правая функция,
+ потом функция слева. Если функция больше чем две, то порядок такой:
+ Самая права, самая левая, функция справа от левой (и так до бесконечности, зависит от количества функций).
 
- UsersContainer в connect - это значит что мы еще как бы создаем контейнерную компоненту вокруг нашей контейнерной компоненты
+      Функция слева должна иметь только один параметр,
+ самая правая которая выполняется первой может иметь неограниченное количество параметров.
+ Количество функций которые можно использовать в compose - не имеет ограничения.
+ И в качестве параметров она имеет запросы follow/unfollow/setCurrentPage/getUsers в фигурных скобках.
+
+ The connect() function connects a React component to a Redux store.
+ provides its connected component with the pieces of the data it needs from the store,
+ and the functions it can use to dispatch actions to the store.
+
+ It does not modify the component class passed to it;
+ instead, it returns a new, connected component class that wraps the component you passed in. - это значит что мы еще
+ "как бы создаем" контейнерную компоненту вокруг нашей контейнерной компоненты UsersContainer
+ и у этой компоненты есть доступ к данным state из redux - то есть она "connected to redux".
+
+ В connect можно передавать любую компоненту - как функциональную (обычную без класса), так и классовую компоненту.
+ Переданные в Connect функции будут вызваны(как я понимаю, при вызове этих функций).
+
+
+ Исходя из всего вышеописанного сначала connect подключает usersContainer, выполняя функции follow, unfollow
+ (а в них находятся api вызовы которые срабатывают если эти вызовы выполнять) и после этого выполняется функция withAuthRedirect.
+
+ все апи вызовы импортируются сюда из api.js файла и передаются в фигурных скобках как mapDispatchToProps. Это по идее должно хорошо работать.
  */
 }

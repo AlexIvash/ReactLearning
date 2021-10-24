@@ -2,6 +2,11 @@ import React from 'react';
 import styles from './Dialogs.module.css';
 import {BrowserRouter, NavLink, Route} from "react-router-dom";
 import store from "./../Redux/State";
+import {connect} from "react-redux";
+import {sendMessageCreator, updateNewMessageBodyCreator} from "../Redux/dialogs-reducer";
+import Dialogs from "./Dialogs";
+import StoreContext from "../StoreContext";
+import {compose} from "redux";
 
 const DialogsContainer = (props) => {
     /**
@@ -21,10 +26,10 @@ const DialogsContainer = (props) => {
      Теперь store должен приходить в Dialogs в props из этой DialogsContainer
      */
     function handleSendMessageClick() {
-        let sendMessageActionCreator = () => ({
-            type: 'SEND-MESSAGE', body: messageBody.current.value
-        })
-        store.dispatch(sendMessageActionCreator());
+        //  let sendMessageActionCreator = () => ({
+        //      type: 'SEND-MESSAGE', body: messageBody.current.value
+        //    })
+        // store.dispatch(sendMessageActionCreator());
     }
 
     /**
@@ -33,10 +38,10 @@ const DialogsContainer = (props) => {
      Теперь store должен приходить в Dialogs в props из этой DialogsContainer
      */
     function handleEditMessageClick() {
-        let updateMessageActionCreator = () => ({
-            type: 'UPDATE-LAST-MESSAGE-BODY', body: messageBody.current.value
-        })
-        store.dispatch(updateMessageActionCreator());
+        //  let updateMessageActionCreator = () => ({
+        //      type: 'UPDATE-LAST-MESSAGE-BODY', body: messageBody.current.value
+        //   })
+        //    store.dispatch(updateMessageActionCreator());
     }
 
     /**
@@ -45,16 +50,37 @@ const DialogsContainer = (props) => {
      Теперь store должен приходить в Dialogs в props из этой DialogsContainer
      */
     function handleDeleteMessageClick() {
-        let deleteMessageActionCreator = () => ({
-            type: 'DELETE-LAST-MESSAGE', body: messageBody.current.value
-        })
-        store.dispatch(deleteMessageActionCreator());
+        //    let deleteMessageActionCreator = () => ({
+        //     type: 'DELETE-LAST-MESSAGE', body: messageBody.current.value
+        //  })
+        // store.dispatch(deleteMessageActionCreator());
     }
 
-    return <Dialogs handleSendMessageClick={handleSendMessageClick} handleEditMessageClick={handleEditMessageClick}
-                    handleDeleteMessageClick={handleDeleteMessageClick}
-                    userData={userData} dialogElements={dialogElements}/>
-    //return () скобки не обязательны, так как мы возвращаем только одну строку
+    //return (
+
+            { /**
+             value = store. value - это значение из StoreContext
+             */}
+
+                let state = props.store.getState();
+
+    { /**
+     StoreContext.Consumer - фигурная скобка всегда должна быть на новой строке. Это баг реакта.
+     */}
+                return <StoreContext.Consumer>
+                    { store => {
+                        //возможно здесь store должен быть без скобок но я пока не уверен. Так было до: (store) => {
+                      return <Dialogs handleSendMessageClick={handleSendMessageClick}
+                                 handleEditMessageClick={handleEditMessageClick}
+                                 handleDeleteMessageClick={handleDeleteMessageClick}
+                                 userData={state.userData} dialogElements={state.dialogElements} />
+
+                    }
+            }
+        </StoreContext.Consumer>
+  //  );
+    {/*return () скобки не обязательны, так как мы возвращаем только одну строку*/
+    }
 }
 
 const Dialogs1 = (props) => {
@@ -74,26 +100,28 @@ const Messages = (props) => {
     );
 }
 
-/*
+
 let mapStateToProps = (state) => {
-    return{
-    dialogsPage: state.dialogsPage
-    }
-
-    let mapDispatchToProps = (dispatch) => {
     return {
-sendMessage: () => {
-dispatch(sendMessageCreator());
-},
-updateNewMessageBody: (body) => {
-dispatch(updateNewMessageBodyCreator(body));
-}
+        dialogsPage: state.dialogsPage
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(Dialogs);
+let mapDispatchToProps = (dispatch) => {
+    return {
+        sendMessage: (newMessageBody) => {
+            dispatch(sendMessageCreator(newMessageBody));
+        },
+        updateNewMessageBody: (body) => {
+            dispatch(updateNewMessageBodyCreator(body));
+        }
+    }
+}
 
-const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (Dialogs);- я тут начал рефакторить, но так и не закончил
-*/
-export default DialogsContainer;
+//let AuthRedirectComponent = withAuthRedirect(Dialogs);
+//export default connect(mapStateToProps, mapDispatchToProps)(Dialogs); - так было до рефакторинга
+
+export default compose(connect(mapStateToProps, mapDispatchToProps)(DialogsContainer));
+//здесь не хватает еще одной функции в compose, но пусть пока будет так, как есть.
+//export default DialogsContainer;
 

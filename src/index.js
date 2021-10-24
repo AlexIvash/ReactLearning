@@ -8,13 +8,20 @@ import StoreContext from "./StoreContext";
 import {BrowserRouter} from "react-router-dom";
 import App from './App';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
 
 let rerenderEntireTree = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <StoreContext.Provider value={store}>
-                <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
-            </StoreContext.Provider>
+            {/*<StoreContext.Provider value={store}> - так было сделано в видео, но работать стало если вместо StoreContext.Provider стал просто Provider. В чем между ними разница?
+            Важно отметить что в render.js тоже есть Provider и вот так вот он работает*/}
+            <Provider store={store}>
+                <App />
+                {/*После того как мы обернули в StoreContext.provider - нам больше ничего не нужно передавать в app
+                <App state={state} dispatch={store.dispatch.bind(store)} store={store} />
+                */}
+                </Provider>
+            {/*</StoreContext.Provider>*/}
         </BrowserRouter>, document.getElementById('root'));
 }
 rerenderEntireTree(store.getState);

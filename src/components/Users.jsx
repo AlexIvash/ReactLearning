@@ -1,5 +1,5 @@
 import React from 'react';
-import profilePhoto from '../common/profilePhoto.jpeg';
+import profilePhoto from '../common/Preloader/profilePhoto.jpeg';
 import styles from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import {usersApi} from "../api/api.js";

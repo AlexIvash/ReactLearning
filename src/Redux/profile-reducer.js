@@ -196,8 +196,8 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
              * нужно заменить на это:
              * state.postsData.pop();
              * //statePostData
-             * Потому что теперь state находится не на этой странице
-             * state - это this._state, который передается к нам со страницы State.js
+             * Потому что теперь state находится не на этой странице state - это this._state,
+             * который передается к нам со страницы State.js
              */
             //remove last element
             postsData.pop();
@@ -205,7 +205,9 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
         case SET_USER_PROFILE: {
             /**
              * Возьмем копию state и вернем ее с тем профилем который приходит из action.
-             * Этот store сидит в redux. Такой store из redux мы создали в redux-store.js файле
+             * С помощь таких операторов profile со значением action.profile добавляется к state
+             * и возвращается туда, куда его вызывают.
+             * Этот store сидит в redux и мы не увидим его в коде. Такой store из redux мы создали в redux-store.js файле
              */
             return {...state, profile: action.profile} //это правильный вариант доступа к state,
             // нужно переделать остальные action выше под него
@@ -220,47 +222,67 @@ const profileReducer = (postsData, action, textFromNewPost, imageFromNewPost, st
 
     }
 }
+
 /**
- * Задача этих функций - вернуть объект (Action) который будет задиспатчен и отправлен в reducer.
+ setStatus и setUserProfile - это thunk функции, которая принимает метод dispatch и может dispatch'ить функции.
+ При повторном при повторном запуске(замыкании) функции превращаются в объекты. До, перед, или после синхронной операции может выполняться thunk
+ (как запрограммируем - так и будет выполняться).
+ И в итоге эти функции потом возвращают объект (Action) который будет задиспатчен и отправлен в reducer. Использование thunk-функций
+ возвращающих функцию которая потом вернет action, а не просто action позволяет:
+ 1) Использовать асинхронно доступ к хранилищу
+ 2)Прописывать больше настроек в этой функции и делать запросы более гибкими.
  */
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 
 export const setStatus = (status) => ({type: SET_STATUS, status})
-/**
- * thunk функции, которая принимает метод dispatch и может dispatch'ить функции,
- * которые при повторном запуске(замыкании) превратятся в объекты. До, перед, или после синхронной операции может выполняться thunk
- * (как запрограммируем - так и будет выполняться).
 
- *.then(data => а не .then(response => - правильный вариант, потому что так возвращается в usersApi
+/**
+.then(data => а не .then(response => - правильный вариант, потому что так возвращается в usersApi
  */
 export const getUserProfile = (userId) => (dispatch) => {
     usersApi.profile(userId)
         .then(data => {
-            dispatch(setUserProfile(data));//response.data - data это то что приходит в ответе - одна из строк
-            //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
-            //полный путь доступа к данным изначально response.data.data(да, там две data)
+            /**
+             response.data - данные которые мы получаем в ответе - одна из строк этого ответа.
+
+             в instanse.get запросе, исходя из этого полный путь доступа к данным получается response.data.data(да, там две data)
+             Почему в данный момент нам сюда возвращается просто data? Потому что в response.data уже есть в api.js
+             файле и response.data прилетает сюда и чтобы получить доступ к данным нужно просто указать "data"
+             */
+            dispatch(setUserProfile(data));
         });
 }
 
 export const getStatus = (userId) => (dispatch) => {
     profileApi.getStatus(userId)
         .then(data => {
-            dispatch(setStatus(data));//response.data - data это то что приходит в ответе - одна из строк.
-            //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
-            //полный путь доступа к данным изначально response.data.data(да, там две data)
+            /**
+             response.data - данные которые мы получаем в ответе - одна из строк этого ответа.
+
+             в instanse.get запросе, исходя из этого полный путь доступа к данным получается response.data.data(да, там две data)
+             Почему в данный момент нам сюда возвращается просто data? Потому что в response.data уже есть в api.js
+             файле и response.data прилетает сюда и чтобы получить доступ к данным нужно просто указать "data"
+             */
+            dispatch(setStatus(data));
         });
 }
 
 export const updateStatus = (status) => (dispatch) => {
     profileApi.updateStatus(status)
         .then(data => {
-            //в сервере на back end есть ответ с ошибкой(resultCode === 1), но мы пока не обрабатываем этот код.
-            //Пока мы только даем действия, если ошибки нету.
+            /**
+             в сервере на back end есть ответ которые содержит ошибку(resultCode === 1), но мы пока не обрабатываем этот код.
+             Пока мы только даем действия, если ошибки нету. То есть если data.resultCode === 1 - мы выдаем правильный результат
+             */
             if (data.resultCode === 0) {
-                dispatch(setStatus(status));//response.data - data это то что приходит в ответе - одна из строк.
-                //В данный момент нам сюда возвращается просто data, из-за того что response.data уже есть в api.js файле в instanse.get
-                //полный путь доступа к данным изначально response.data.data(да, там две data)
-                //Возможно здесь нужно data.status?
+                /**
+                 response.data - данные которые мы получаем в ответе - одна из строк этого ответа.
+
+                 в instanse.get запросе, исходя из этого полный путь доступа к данным получается response.data.data(да, там две data)
+                 Почему в данный момент нам сюда возвращается просто data? Потому что в response.data уже есть в api.js
+                 файле и response.data прилетает сюда и чтобы получить доступ к данным нужно просто указать "data"
+                 */
+                dispatch(setStatus(status));
             }
         });
 }

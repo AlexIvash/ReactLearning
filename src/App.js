@@ -13,6 +13,7 @@ import store from './Redux/redux-store.js';
 import ProfileContainer from "./components/ProfileContainer";
 import HeaderContainer from "./components/HeaderContainer";
 import Login from "./components/Login";
+import DialogsContainer from "./components/DialogsContainer";
 
 //Все комментарии могут быть только вне функций иначе будут вылазить рандомные ошибки
 
@@ -37,10 +38,10 @@ const App = (props) => {
 
                  по хорошему данные из state не передавать аж здесь, а передавать через connect и store
                  */}
-                <Route path='/Profile/:userId?' render={() => <ProfileContainer postsData={State.postsData} store={store}/>}/>
-                <Route exact path='/Dialogs' render={() => <Dialogs messagesData={State.messagesData}/>}/>
+                <Route path='/Profile/:userId?' render={() => <ProfileContainer postsData={State.postsData} store={store} />}/>
+                <Route exact path='/Dialogs' render={() => <DialogsContainer messagesData={State.messagesData} store={store} />}/>
                 <Route path='/Users' render={() => <UsersContainer store={store}/>}/>
-                <Route path='/Login' render={() => <Login />}/>
+                <Route path='/Login' render={() => <Login store={store} />} />
 
                 {/*
    И так,  я продвинулся наконец.

@@ -20,9 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/common/FormsControls/FormsControls.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/FormsControls/FormsControls.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/validators/validators.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProfileStatus.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileStatus.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/preloader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/preloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/preloader.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/profilePhoto.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/profilePhoto.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +50,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1ZxF6ioNuPQ8bzpN12NKA0sLyZI" />
   <component name="ProjectViewState">
@@ -64,6 +75,7 @@
       <recent name="$PROJECT_DIR$/src/Redux" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/common/Preloader" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/profilePhoto" />
     </key>
@@ -126,7 +138,18 @@
       <workItem from="1630999547873" duration="3007000" />
       <workItem from="1631217469262" duration="7106000" />
       <workItem from="1631521113012" duration="4579000" />
-      <workItem from="1631535933884" duration="4297000" />
+      <workItem from="1631535933884" duration="4698000" />
+      <workItem from="1635062814395" duration="8428000" />
+      <workItem from="1635077592275" duration="7336000" />
+      <workItem from="1639741008629" duration="4315000" />
+      <workItem from="1640072044504" duration="84000" />
+      <workItem from="1640072184641" duration="5260000" />
+      <workItem from="1640615542249" duration="229000" />
+      <workItem from="1641816499866" duration="5575000" />
+      <workItem from="1641918341562" duration="1076000" />
+      <workItem from="1642172226319" duration="511000" />
+      <workItem from="1642429895211" duration="2392000" />
+      <workItem from="1647264919526" duration="682000" />
     </task>
     <servers />
   </component>
@@ -143,6 +166,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
