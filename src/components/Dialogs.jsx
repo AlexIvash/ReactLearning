@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Dialogs.module.css';
 import {Redirect} from "react-router-dom";
-import Login from "./Login";
-import {Field, reduxForm} from "redux-form";
+import {reduxForm} from "redux-form";
+//import AddMessageForm from "./AddMessageForm/AddMessageForm"; возможно это неправильно написанный импорт
+import AddMessageForm from "./AddMessageForm";
 
 
 const Dialogs = (props) => {
@@ -18,8 +18,11 @@ const Dialogs = (props) => {
     if(props.isAuth == false) return <Redirect to={Login} />*/
     return (
         <div>
-             <AddMessageFormRedux onSubmit={addNewMessage} />{/*
+            {/*
+             Это уже не нужно так как мы поменяли на AddMessageForm, а AddMessageForm вынесли в отдельный файл
+             <AddMessageFormRedux onSubmit={addNewMessage} />
              */}
+            <AddMessageForm onSubmit={addNewMessage} />
         </div>
     );
 }
@@ -28,22 +31,13 @@ let addNewMessage = (values) =>{
     alert(values.newMessageBody);
 }
 
-const AddMessageForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}> {/*Выполняет отправку месседжей на сервер. Все баттоны которые были в предыдущей версии без формы(которую я сам писал)
-        я убрал так как они либо не нужны уже либо нереализованы*/}
-            <div className={styles.DialogPageNewMessage}>
-                {/** какого-то хера необходимо обернуть все эти элементы в один div - иначе будет ошибка. То есть эти text-area и тд не могут быть не внутри div.*/}
-                <p>Here are your messages?</p>
-                <Field className={styles.textarea} component={"textarea"} name={"newMessageBody"} placeholder="Enter your message" />
-            </div>
-        </form>
-    )
+let onSendMessageClick = () => {
+    props.sendMessage();
 }
-/**
- * Field нельзя использовать за пределами redux-form, поэтому для этого мы обернем компоненту AddMessageForm в redux-form
- */
-const AddMessageFormRedux = reduxForm({form:"dialogAddMessageForm"})(AddMessageForm);
+
+//const AddMessageFormRedux = reduxForm({form:"dialogAddMessageForm"})(AddMessageForm); Думаю, это не нужно
+//так как мы встраиваем сюда .jsx разметку  <AddMessageForm из AddMessageForm.jsx файла
+
 
 export default Dialogs;
 

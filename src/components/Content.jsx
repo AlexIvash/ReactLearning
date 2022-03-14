@@ -2,10 +2,14 @@ import './Content.css';
 import Posts from './Posts';
 import store from "./../Redux/State";
 import React from 'react';
+import {Field, reduxForm} from "redux-form";
+import {Input, Textarea} from "../common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "../utils/validators/validators";
 
 const Content = (props) => {
-    const newPostElement = React.createRef();
-    const newPostElementAddPhoto = React.createRef();
+    //Мы заменили это Field, потому больше не понадобится наверное.
+    //const newPostElement = React.createRef();
+  //  const newPostElementAddPhoto = React.createRef();
 
     /**
      * Это было костыльное решение, но в итоге onChange не нужен
@@ -33,9 +37,12 @@ const Content = (props) => {
 
          * console.log("I am in handleAddPostClick, inputData is: " + newPostElement.current.focus()); - это некорректный вариант
          */
+
+
+        /* Может это пока заблочить? Это наверное уже не нужно, мы меняем на форму Field-Form
         const inputData = newPostElement.current.value;
         const newPostImage = newPostElementAddPhoto.current.value;
-
+*/
         /**
          * This method used in dispatch method - in order to add new Post (ADD-POST action type)
          * @returns {{type: ADD-POST}}
@@ -55,34 +62,38 @@ const Content = (props) => {
          And now it is:
          store.dispatch('ADD-POST', inputData, newPostImage);
          */
-        store.dispatch(addPostActionCreator(), inputData, newPostImage);
+        store.dispatch(addPostActionCreator()/*, inputData, newPostImage наверное не нужно потому что меняем на Field Redux form*/);
     }
 
     /**
      * This function is responsible for update post on the Content page
+     *
+     * This method used in dispatch method - in order to update new Post (UPDATE-NEW-POST-TEXT action type)
+     * @returns {{type: UPDATE-NEW-POST-TEXT}}
+     *          Кстати если функция только что-то возвращает - тогда не обязательно слово return. Было:
+     *          let updatePostActionCreator = () => {
+     *             return {
+     *                 type: 'UPDATE-NEW-POST-TEXT', newText: inputData
+     *             }
+     *         }
+     *          Стало:
+     *          let updatePostActionCreator = () => ({
+     *                 type: 'UPDATE-NEW-POST-TEXT', newText: inputData
+     *         })
      */
+    /**
+     * Закомментировано так как будет реализована другая логика
     function handleEditPostClick() {
         const inputData = newPostElement.current.value;
         const newPostImage = newPostElementAddPhoto.current.value;
-        /**
-         * This method used in dispatch method - in order to update new Post (UPDATE-NEW-POST-TEXT action type)
-         * @returns {{type: UPDATE-NEW-POST-TEXT}}
-         Кстати если функция только что-то возвращает - тогда не обязательно слово return. Было:
-         let updatePostActionCreator = () => {
-            return {
-                type: 'UPDATE-NEW-POST-TEXT', newText: inputData
-            }
-        }
-         Стало:
-         let updatePostActionCreator = () => ({
-                type: 'UPDATE-NEW-POST-TEXT', newText: inputData
-        })
-         */
+
+
+
         let updatePostActionCreator = () => ({
             type: 'UPDATE-NEW-POST-TEXT', newText: inputData
         })
         store.dispatch(updatePostActionCreator(), inputData, newPostImage);
-    }
+    } */
 
     /**
      * This function is responsible for delete post on the Content page
@@ -117,20 +128,8 @@ const Content = (props) => {
             </div>
             <div className='Posts'>
                 <div className='PostButtons'>
-                    <p>Add your message and url of image here: </p>
-                    <textarea type="text" ref={newPostElement} onChange={readTextWhenChanged}/>
-                    <br></br>
-                    <p>image link:</p>
-                    <input type="text" ref={newPostElementAddPhoto}/>
-                    <br></br>
-                    {/**
-                     Здесь мы вызываем метод handleAddPostClick который берет данные из textarea, пишет их в переменную inputData и передает
-                     в State.js
-                     */}
-                    <p>What do you want to do with the last post?</p>
-                    <input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick}
-                           value="Add post"/>
-                    <input type="button" size="Large" className='PostButton1' onClick={handleEditPostClick}
+                    <AddNewPostForm />
+                    {/*  <input type="button" size="Large" className='PostButton1' onClick={handleEditPostClick} меняем на Field-Redux form потому это наверное не нужно*/}
                            value="Edit post"/>
                     <button size="Large" className='PostButton2' onClick={handleDeletePostClick}>Delete</button>
                     {/* I've leave it there just as example of some alert action
@@ -144,6 +143,32 @@ const Content = (props) => {
         </div>
     );
 }
+
+//const AddNewPostForm = (props) => { props здесь уже нужен
+function AddNewPostForm (props) {
+    const maxLength10 = maxLengthCreator(10);
+    return <form onSubmit={props.handleSubmit}>
+        <p>Add your message and url of image here: </p>
+        {/* <textarea type="text" ref={newPostElement} onChange={readTextWhenChanged}/> */}
+        <Field name="newPostText" component={Textarea} placeholder={"Post message"} validate={[required, maxLength10]} />
+        <br></br>
+        <p>:</p>
+        {/* <input type="text" ref={newPostElementAddPhoto}/>*/}
+        <Field name="newPhotoForText" component={Input} placeholder={"Add your image link here"} />
+        <br></br>
+        {/**
+         Здесь мы вызываем метод handleAddPostClick который берет данные из textarea, пишет их в переменную inputData и передает
+         в State.js
+         */}
+        <p>What do you want to do with the last post?</p>
+        {/*  <input type="button" size="Large" className='PostButton1' onClick={handleAddPostClick}
+        value="Add post"/>*/}
+        <button>Add post</button>
+
+    </form>
+}
+AddNewPostForm = reduxForm({form:"ProfileAddNewPostForm"}) (AddNewPostForm);
+
 export default Content;
 
 //Поставил скобку после return и всё же каким-то чудом начало работать

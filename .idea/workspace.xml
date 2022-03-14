@@ -20,17 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99c9f02-bdfe-4c2a-a7c9-b66b337dee70" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/common/FormsControls/FormsControls.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/common/FormsControls/FormsControls.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/validators/validators.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/preloader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/preloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/preloader.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/preloader.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/profilePhoto.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Preloader/profilePhoto.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UsersContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UsersContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Content.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Content.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +58,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -150,6 +143,9 @@
       <workItem from="1642172226319" duration="511000" />
       <workItem from="1642429895211" duration="2392000" />
       <workItem from="1647264919526" duration="682000" />
+      <workItem from="1647432698290" duration="1969000" />
+      <workItem from="1648708455015" duration="691000" />
+      <workItem from="1649151175668" duration="251000" />
     </task>
     <servers />
   </component>

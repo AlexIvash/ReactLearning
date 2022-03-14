@@ -3,7 +3,7 @@ import styles from './Dialogs.module.css';
 import {BrowserRouter, NavLink, Route} from "react-router-dom";
 import store from "./../Redux/State";
 import {connect} from "react-redux";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../Redux/dialogs-reducer";
+import {sendMessageCreator} from "../Redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import StoreContext from "../StoreContext";
 import {compose} from "redux";
@@ -111,9 +111,6 @@ let mapDispatchToProps = (dispatch) => {
     return {
         sendMessage: (newMessageBody) => {
             dispatch(sendMessageCreator(newMessageBody));
-        },
-        updateNewMessageBody: (body) => {
-            dispatch(updateNewMessageBodyCreator(body));
         }
     }
 }
