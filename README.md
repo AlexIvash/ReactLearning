@@ -10,6 +10,9 @@ node ./src/index.js - to launch this API
 OR
 npm start
 DO NOT use npm react start - it won't work, but npm start - actually works
+UPDATE:
+Use NODE_OPTIONS=--openssl-legacy-provider before any command. So for running project, please use
+NODE_OPTIONS=--openssl-legacy-provider npm start
 
 
 //npx create-react-app my-app - в терминале чтобы создать приложение на реакте
